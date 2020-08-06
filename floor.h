@@ -22,9 +22,9 @@ public:
     int readFile(std::fstream &);
     std::shared_ptr<Player> getPlayer();
     std::vector<std::shared_ptr<Enemy>> getEnemies();
-    std::vector<std::shared_ptr<Potion>> getPotions;
-    std::vector<std::shared_ptr<Treasure>> getTreasures;
-    std::vector<std::shared_ptr<Chamber>> getChambers;
+    std::vector<std::shared_ptr<Potion>> getPotions();
+    std::vector<std::shared_ptr<Treasure>> getTreasures();
+    std::vector<std::shared_ptr<Chamber>> getChambers();
     std::ostream print();
     void update();
 
