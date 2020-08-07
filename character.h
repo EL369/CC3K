@@ -14,6 +14,7 @@ protected:
 
 public:
     Character(int, int, int, int, int);
+    virtual ~Character();
     int getHP();
     int getAtk();
     int getDF();
