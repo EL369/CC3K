@@ -20,22 +20,6 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
     }
-    // for(int i = 0; i<5; ++i){
-    //     std::vector<std::vector<char>> grid;
-    //     for(int j = 0; j<25; ++j) {
-    //         std::vector<char> row;
-    //         std::string s;
-    //         std::getline(file, s);
-    //         for(int k = 0; k<79; ++k){
-    //             row.emplace_back(s[k]);
-    //         std::cout<<k<<row[k]<<std::endl;
-    //         }
-    //         grid.emplace_back(row);
-    //         std::cout<<j<<row[0]<<std::endl;
-    //     }         
-    //     std::cout<<"here2 "<<i<<std::endl;
-    //     floors[i] = std::make_shared<Floor>(grid, i+1);
-    // }(floors[0])->print();
     std::vector<std::vector<char>> grid;
     std::string s;
     std::vector<char> line;
@@ -58,6 +42,4 @@ int main(int argc, char* argv[]) {
             row = 0;
         }
     }(floors[0])->print();
-    std::cout<<"...."<<std::endl;
-    (floors[4])->print();
 }

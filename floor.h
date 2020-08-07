@@ -27,8 +27,6 @@ private:
 public:
     Floor( std::vector<std::vector<char>> grid, int id);
 
-    // int readFile(std::ifstream &);
-
     std::shared_ptr<Player> getPlayer();
     std::vector<std::shared_ptr<Enemy>> getEnemies();
     std::vector<std::shared_ptr<Potion>> getPotions();
