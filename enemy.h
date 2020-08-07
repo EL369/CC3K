@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "character.h"
+#include "potion.h"
 
 class Shade;
 class Drow;
@@ -11,18 +12,18 @@ class Vampire;
 class Troll;
 class Goblin;
 
-class Enemy : Character{
-private:
+class Enemy : public Character{
+protected:
     bool isHostile;
 
 public:
     bool getHostile();
-    void attack(std::shared_ptr<Shade>);
-    void attack(std::shared_ptr<Drow>);
-    void attack(std::shared_ptr<Vampire>);
-    void attack(std::shared_ptr<Troll>);
-    void attack(std::shared_ptr<Goblin>);
-    void move();
+    virtual void attack(std::shared_ptr<Shade>);
+    virtual void attack(std::shared_ptr<Drow>);
+    virtual void attack(std::shared_ptr<Vampire>);
+    virtual void attack(std::shared_ptr<Troll>);
+    virtual void attack(std::shared_ptr<Goblin>);
+    virtual void move();
 
 };
 
