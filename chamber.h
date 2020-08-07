@@ -3,18 +3,28 @@
 #include <vector>
 #include <memory>
 
-class Player;
-class Enemy;
-class Potion;
-class Treasure;
-class Character;
+// class Player;
+// class Enemy;
+// class Potion;
+// class Treasure;
+// class Character;
 
 class Chamber{
 private:
-    std::vector<std::vector<char>> chamber;
-    int which;
+    int id;
+    int topLeftX;
+    int topLeftY;
+    int width;
+    int height;
+    std::vector<std::vector<char>> grid; //or reference ?
+
 public:
-    void generateRand(char);
+    Chamber(int, std::vector<std::vector<char>>&);
+
+    ~Chamber(){} //grid.clear();} ?
+
+    //Generates the char in random position within range of this Chamber, returns the position
+    std::vector<int> generateCharRand(char); 
 
     void erase(char);
 

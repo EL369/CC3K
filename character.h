@@ -26,6 +26,8 @@ public:
     void addHP(int);
     void addAttack(int);
     void addDefense(int);
+    int setRow(int);
+    int setCol(int);
 
 };
 #endif

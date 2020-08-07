@@ -2,7 +2,6 @@
 #define _FLOOR_H_
 #include <vector>
 #include <memory>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -27,6 +26,8 @@ private:
 public:
     Floor( std::vector<std::vector<char>> grid, int id);
 
+    ~Floor(){}
+
     std::shared_ptr<Player> getPlayer();
     std::vector<std::shared_ptr<Enemy>> getEnemies();
     std::vector<std::shared_ptr<Potion>> getPotions();
@@ -37,13 +38,12 @@ public:
 
     void update();
 
-    void generateChamber();
-
-    void generateRand(std::shared_ptr<Player>);
-    void generateRand(std::shared_ptr<Potion>);
-    void generateRand(std::shared_ptr<Treasure>);
-    void generateRand(std::shared_ptr<Enemy>);
-    void generateRand( char stair );
+    void generateChambers();
+    void generatePlayer(std::shared_ptr<Player>);
+    void generatePotion(std::shared_ptr<Potion>);
+    void generateTreasure(std::shared_ptr<Treasure>);
+    void generateEnemy(std::shared_ptr<Enemy>);
+    void generateStair( char stair );
 
     void erase(std::shared_ptr<Character>);
     void erase(std::shared_ptr<Potion>);

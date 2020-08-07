@@ -12,7 +12,6 @@ std::vector<std::shared_ptr<Floor>> floors;
 
 int main(int argc, char* argv[]) {
     std::ifstream file(defaultFile);
-    std::cout<<"???"<<argc;
     if (argc > 1) {
         std::ifstream file(argv[1]);
         if(!file.good()){
@@ -37,7 +36,7 @@ int main(int argc, char* argv[]) {
         line.clear();
         if(row==25){
             floors.emplace_back(std::make_shared<Floor>(grid, id));
-            std::cout<<"--id---"<<id<<std::endl;
+            // std::cout<<"--id---"<<id<<std::endl;
             ++id;
             row = 0;
         }
