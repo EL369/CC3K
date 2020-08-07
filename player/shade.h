@@ -5,7 +5,7 @@
 
 class Shade: public Player{
     public:
-    Shade(): Player{125,25,25,row,col,false} { }
+    Shade(): Player{125,25,25,row,col,floorID, chamberID, 125} { }
 };
 
 #endif

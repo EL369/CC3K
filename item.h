@@ -5,11 +5,12 @@
 #include <memory>
 
 class Item{
-private:
+protected:
     int row;
     int col;
 
 public:
+    Item(int, int);
     int getRow();
     int getCol();
     int setRow();

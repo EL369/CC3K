@@ -5,7 +5,7 @@
 
 class Human: public Enemy{
     public:
-    Human(): Player{140,20,20,row,col,floorID, chamberID, maxHP} { }
+    Human(): Player{140,20,20,row,col,false} { }
 };
 
 #endif
