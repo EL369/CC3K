@@ -4,7 +4,7 @@
 class Gold;
 
 class Character{
-private:
+protected:
     int health;
     int attack;
     int defense;
@@ -13,15 +13,15 @@ private:
     std::shared_ptr<Gold> gold;
 
 public:
-    Character(int, int, int, int, std::shared_ptr<Gold>);
+    Character(int, int, int, int, int);
     int getHP();
     int getAtk();
     int getDF();
     int getGold();
     int getRow();
     int getCol();
-    void addRow(int);
-    void addCol(int);
+    void changeRow(int);
+    void changeCol(int);
     void addHP(int);
     void addAttack(int);
     void addDefense(int);
