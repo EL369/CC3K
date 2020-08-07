@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 #include "character.h"
-#include "item.h"
+#include "treasure.h"
+#include "potion.h"
+
 
 class Gold;
 class Enemy;
@@ -15,11 +17,12 @@ class Player: public Character{
     int floorID;
     int chamberID;
     int maxHP;
-    shared_ptr<Potion> potion;
+    std::shared_ptr<Potion> potion;
     public:
     Player(int, int, int, int, int, int, int, int);
-    virtual void accept(shared_ptr <Enemy>);
-    virtual void attack(shared_ptr <Enemy>);
+    virtual ~Player();
+    virtual void accept(std::shared_ptr <Enemy>);
+    virtual void attack(std::shared_ptr <Enemy>);
     virtual void usePotion();
     virtual void move(std::string);
     int getFloorID();
