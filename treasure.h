@@ -11,7 +11,8 @@ class Treasure: public Item{
     bool pick;
 
     public:
-    Treasure(int, int, int, bool);
+    Treasure(int, int, int);
+    ~Treasure() { }
     int getAmt();
     bool getPick();
     void setAmt(int);

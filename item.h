@@ -11,10 +11,11 @@ protected:
 
 public:
     Item(int, int);
+    ~Item() { }
     int getRow();
     int getCol();
-    int setRow();
-    int setCol();
+    void setRow(int);
+    void setCol(int);
 
 };
 
