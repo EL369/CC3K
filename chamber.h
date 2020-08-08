@@ -6,8 +6,8 @@
 // class Player;
 // class Enemy;
 // class Potion;
-// class Treasure;
-// class Character;
+class Item;
+class Character;
 
 class Chamber{
 private:
@@ -16,21 +16,24 @@ private:
     int topLeftY;
     int width;
     int height;
-    std::vector<std::vector<char>> grid; //or reference ?
+    std::vector<std::vector<char>>& grid; //or pointer ?
 
 public:
     Chamber(int, std::vector<std::vector<char>>&);
 
-    ~Chamber(){} //grid.clear();} ?
+    ~Chamber(){}
 
     //Generates the char in random position within range of this Chamber, returns the position
     std::vector<int> generateCharRand(char); 
 
-    void erase(char);
+    void erase(int, int);
 
-    void add(char);
+    // void add(int, int, char);
 
     char getPos (int, int);
+    
+    bool inChamber(std::shared_ptr<Character>);
+    bool inChamber(std::shared_ptr<Item>);
 
 };
 

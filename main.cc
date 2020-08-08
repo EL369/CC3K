@@ -29,7 +29,6 @@ int main(int argc, char* argv[]) {
         for(int i=0; i<col; ++i){
             line.emplace_back(s[i]);            
             // std::cout<<"---char---"<<line[i]<<std::endl;
-
         }grid.emplace_back(line);
         ++row;
         s = "";
@@ -41,4 +40,10 @@ int main(int argc, char* argv[]) {
             row = 0;
         }
     }(floors[0])->print();
+    floors[0]->generateChambers();
+    // std::shared_ptr<Player> p = std::make_shared<Player>();
+    // floors[0]->generatePlayer();
+    // (floors[0])->print();
+    floors[0]->generateStair();
+    (floors[0])->print();
 }

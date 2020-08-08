@@ -43,7 +43,7 @@ public:
     void generatePotion(std::shared_ptr<Potion>);
     void generateTreasure(std::shared_ptr<Treasure>);
     void generateEnemy(std::shared_ptr<Enemy>);
-    void generateStair( char stair );
+    void generateStair();
 
     void erase(std::shared_ptr<Character>);
     void erase(std::shared_ptr<Potion>);
@@ -51,11 +51,6 @@ public:
 
     void add(std::shared_ptr<Character>, int, int);
     void add(std::shared_ptr<Treasure>, int, int);
-    void add(std::shared_ptr<Potion>, int, int);
-
-    bool inChamber(std::shared_ptr<Character>);
-    bool inChamber(std::shared_ptr<Treasure>);
-    bool inChamber(std::shared_ptr<Potion>);
 
 };
 

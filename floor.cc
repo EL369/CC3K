@@ -64,8 +64,8 @@ void Floor::generatePlayer(std::shared_ptr<Player> p){
 
 void Floor::generatePotion(std::shared_ptr<Potion> p){
     int i = rand() % 5;
-    int effect = p->getEffect();
-    std::vector<int> position = (chambers[i])->generateCharRand(effect);
+    int type = p->getType();
+    std::vector<int> position = (chambers[i])->generateCharRand(type);
     // p->setChamber(i);
     p->setRow(position[0]);
     p->setCol(position[1]);
@@ -79,7 +79,7 @@ void Floor::generateEnemy(std::shared_ptr<Enemy> e){
 
 }
 
-void Floor::generateStair( char stair ){
+void Floor::generateStair(){
     int i;
     while(true){
         i = rand() % 5;
