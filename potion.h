@@ -8,13 +8,13 @@
 
 class Potion: public Item{
     int effect;
-    std::string type;
+    int type;
 
     public:
     Potion(int, int, int, std::string);
     ~Potion() { }
     int getEffect();
-    std::string getType();
+    int getType();
 };
 
 #endif
