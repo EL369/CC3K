@@ -21,10 +21,10 @@ class Player: public Character{
     public:
     Player(int, int, int, int, int, int, int, int);
     virtual ~Player();
-    virtual void accept(std::shared_ptr <Enemy>);
-    virtual void attack(std::shared_ptr <Enemy>);
-    virtual void usePotion();
-    virtual void move(std::string);
+    virtual void accept(std::shared_ptr <Enemy>) = 0;
+    // virtual void attack(std::shared_ptr <Enemy>) = 0;
+    // virtual void usePotion();
+    void move(std::string);
     int getFloorID();
     int getChamberID();
     int getMaxHP();

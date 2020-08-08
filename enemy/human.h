@@ -4,8 +4,9 @@
 #include "../enemy.h"
 
 class Human: public Enemy{
+    friend class concreteLevel;
     public:
-    Human(): Player{140,20,20,row,col,false} { }
+    Human();
 };
 
 #endif

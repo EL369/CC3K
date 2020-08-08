@@ -5,8 +5,10 @@
 
 class Shade: public Player{
     public:
-    Shade(): Player{125,25,25,row,col,floorID, chamberID, 125} { }
-    ~Shade() override {}
+    Shade();
+    ~Shade() {}
+    void accept(std::shared_ptr <Enemy>) override;
+    // void attack(std::shared_ptr <Enemy>) override;
 };
 
 #endif

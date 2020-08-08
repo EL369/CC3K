@@ -38,6 +38,7 @@ public:
 
     void update();
 
+    void generate();
     void generateChambers();
     void generatePlayer(std::shared_ptr<Player>);
     void generatePotion(std::shared_ptr<Potion>);

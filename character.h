@@ -14,20 +14,20 @@ protected:
 
 public:
     Character(int, int, int, int, int);
-    virtual ~Character();
+    virtual ~Character() { }
     int getHP();
     int getAtk();
     int getDF();
-    int getGold();
+    std::shared_ptr<Gold> getGold();
     int getRow();
     int getCol();
-    void changeRow(int);
-    void changeCol(int);
+    void moveRow(int);
+    void moveCol(int);
+    void addAtk(int);
+    void addDF(int);
     void addHP(int);
-    void addAttack(int);
-    void addDefense(int);
-    int setRow(int);
-    int setCol(int);
+    void setRow(int);
+    void setCol(int);
 
 };
 #endif

@@ -46,7 +46,6 @@ std::vector<std::shared_ptr<Chamber>> Floor::getChambers(){
     return chambers;
 }
 
-
 void Floor::generateChambers(){
     for (int i=0; i<5; ++i) {
         auto chamber = std::make_shared<Chamber> (i, grid);
@@ -87,3 +86,4 @@ void Floor::generateStair(){
     }
     (chambers[i])->generateCharRand('\\');
 }
+
