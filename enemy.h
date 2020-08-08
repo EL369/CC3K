@@ -7,11 +7,24 @@
 #include "potion.h"
 #include "player.h"
 #include "player/shade.h"
+// #include "enemy/dwarf.h"
 #include "enemy/human.h"
 
 
+class Enemy : public Character{
+    protected:
+    bool isHostile;
 
-class Enemy;
+    public:
+    Enemy(int, int, int, int, int, bool);
+    bool getHostile();
+    virtual void attackEnemy(std::shared_ptr<Shade>);
+    //virtual void attackEnemy(std::shared_ptr<Drow>);
+    //virtual void attackEnemy(std::shared_ptr<Vampire>);
+    // virtual void attackEnemy(std::shared_ptr<Troll>);
+    // virtual void attackEnemy(std::shared_ptr<Goblin>);
+    // virtual void move() = 0;
+};
 
 class Level{
     virtual std::shared_ptr<Enemy> getEnemy() = 0;
@@ -28,19 +41,5 @@ class concreteLevel: public Level{
     void setLevel(const char&) override;
 };
 
-class Enemy : public Character{
-    protected:
-    bool isHostile;
-
-    public:
-    Enemy(int, int, int, int, int, bool);
-    bool getHostile();
-    virtual void attack(std::shared_ptr<Shade>);
-    //virtual void attack(std::shared_ptr<Drow>);
-    //virtual void attack(std::shared_ptr<Vampire>);
-    // virtual void attack(std::shared_ptr<Troll>);
-    // virtual void attack(std::shared_ptr<Goblin>);
-    // virtual void move() = 0;
-};
 
 #endif
