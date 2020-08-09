@@ -9,7 +9,7 @@
 class Treasure: public Item{
     int amount;
     bool pick;
-    int type;
+    int type; //6 - normal gold pile, 7 - small hoard, 8 - merchant hoard, 9 - dragon hoard
 
     public:
     Treasure(int, int, int, int);
