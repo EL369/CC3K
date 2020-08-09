@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include <cmath>
+#include "enemy/human.h"
 
 using namespace std;
 
