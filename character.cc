@@ -1,8 +1,8 @@
 #include "character.h"
-#include "item/shoard.h"
-#include "item/normal.h"
-#include "item/merchantHoard.h"
-#include "item/dHoard.h"
+#include "treasure/shoard.h"
+#include "treasure/gold.h"
+#include "treasure/mHoard.h"
+#include "treasure/dHoard.h"
 
 Character::Character(int h, int atk, int def, int row, int col):
     health{h}, attack{atk}, defense{def}, row{row}, col{col} { }

@@ -29,7 +29,7 @@ public:
     ~Floor(){}
 
     std::shared_ptr<Player> getPlayer();
-    // std::vector<std::shared_ptr<Enemy>> getEnemies();
+    std::vector<std::shared_ptr<Enemy>> getEnemies();
     std::vector<std::shared_ptr<Potion>> getPotions();
     std::vector<std::shared_ptr<Treasure>> getTreasures();
     std::vector<std::shared_ptr<Chamber>> getChambers();
@@ -43,7 +43,7 @@ public:
     void generatePlayer(std::shared_ptr<Player>);
     void generatePotion(std::shared_ptr<Potion>);
     void generateTreasure(std::shared_ptr<Treasure>);
-    // void generateEnemy(std::shared_ptr<Enemy>);
+    void generateEnemy(std::shared_ptr<Enemy>);
     void generateStair();
 
     void erase(std::shared_ptr<Character>);
@@ -55,7 +55,9 @@ public:
 
     // std::vector<int> getPos(int, int);
 
-    void enemyAttackMove();
+    std::vector<int> existNear(char, int, int);
+
+    void enemyAttackMove(std::shared_ptr<Enemy> e);
 
 
 };
