@@ -9,27 +9,30 @@
 #include "potion.h"
 
 
-class Gold;
 class Enemy;
+class Gold;
 
 class Player: public Character{
     protected:
     int floorID;
     int chamberID;
     int maxHP;
+    int gold;
     std::shared_ptr<Potion> potion;
     public:
     Player(int, int, int, int, int, int, int, int);
     virtual ~Player();
-    virtual void accept(std::shared_ptr <Enemy>) = 0;
+    virtual void accept(Enemy &) = 0;
     // virtual void attack(std::shared_ptr <Enemy>) = 0;
-    // virtual void usePotion();
+    virtual void usePotion(std::shared_ptr<Potion>);
     void move(std::string);
     int getFloorID();
     int getChamberID();
     int getMaxHP();
+    int getGold();
     void setFloor(int);
     void setChamber(int);
+    void addGold(int);
 };
 
 #endif

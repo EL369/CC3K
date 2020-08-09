@@ -3,6 +3,10 @@
 #include "enemy.h"
 #include "potion.h"
 #include "treasure.h"
+#include "item/shoard.h"
+#include "item/normal.h"
+#include "item/merchantHoard.h"
+#include "item/dHoard.h"
 #include "chamber.h"
 #include "character.h"
 #include <iostream>
@@ -78,18 +82,19 @@ void Floor::generatePotion(std::shared_ptr<Potion> p){
     potions.emplace_back(p);
 }
 
-// void Floor::generateTreasure(std::shared_ptr<Treasure> t){
-//     std::srand(time(NULL));
-//     int i = rand() % 5;
-//     int type = t->getType(); //getType?
-//     char c = '0'+type;
-//     std::vector<int> position = (chambers[i])->generateCharRand(c);
-//     // p->setChamber(i);
-//     t->setRow(position[0]);
-//     t->setCol(position[1]);
-//     potions.emplace_back(t);
-
-// }
+/*
+void Floor::generateTreasure(std::shared_ptr<Treasure> t){
+     std::srand(time(NULL));
+     int i = rand() % 5;
+     int type = t->getType(); //getType?
+     char c = '0'+type;
+     std::vector<int> position = (chambers[i])->generateCharRand(c);
+     // t->setChamber(i);
+     t->setRow(position[0]);
+     t->setCol(position[1]);
+     potions.emplace_back(t);
+}
+*/
 
 // void Floor::generateEnemy(std::shared_ptr<Enemy> e){
 
@@ -122,19 +127,22 @@ void Floor::generateAll(){
         potions.emplace_back(potion);
     }
     // gold: 5/8 chance of normal, 1/8 dragon hoard, 2/8 small hoard
-    // for(int i=0; i<10; ++i){
-    //     std::srand(time(NULL));
-    //     int type = rand() % 8;
-    //     if(type < 5){
-    //         std::shared_ptr<Treasure> t = std::make_shared<Gold>();
-    //     }else if (type == 7){
-    //         std::shared_ptr<Treasure> t = std::make_shared<Dhoard>();
-    //     }else{
-    //         std::shared_ptr<Treasure> t = std::make_shared<Shoard>();
-    //     }
-    //     generateTreasure(t);
-    //     treasures.emplace_back(t);
-    // }
+    /*
+    for(int i=0; i<10; ++i){
+         std::srand(time(NULL));
+         int type = rand() % 8;
+         std::shared_ptr<Treasure> t;
+         if(type < 5){
+             std::shared_ptr<Treasure> t = std::make_shared<Normal>();
+         }else if (type == 7){
+             std::shared_ptr<Treasure> t = std::make_shared<Dhoard>();
+         }else{
+             std::shared_ptr<Treasure> t = std::make_shared<Shoard>();
+         }
+         generateTreasure(t);
+         treasures.emplace_back(t);
+    }
+    */
     print();
 }
 
@@ -146,3 +154,31 @@ void Floor::move(std::shared_ptr<Character>, int initX, int initY, int newX, int
     }
 }
 
+
+// Enemies detect whether there's player within 1 block around. 
+void Floor::enemyAttackMove(){
+    int prow = player->getRow();
+    int pcol = player->getCol();
+    for (int y = prow-1; y <= prow+1; y++){
+        for (int x = pcol-1; x <= pcol+1; x++){
+            if (grid[y][x] == 'H'){
+                int enemyAt = 0;
+                int sizeEnemy = enemies.size();
+                for(int i = 0; i < sizeEnemy; i++){
+                    if(enemies[i]->getCol() == x && enemies[i]->getRow() == y){
+                        enemyAt = i;
+                        break;
+                    }
+                }
+                if (enemies[enemyAt]->getHostile() == true){
+                    player->accept(*enemies[enemyAt]);
+                }
+            }
+            /*
+            else if (grid[y][x] == 'D'){
+
+            }
+            */
+        }
+    }
+}

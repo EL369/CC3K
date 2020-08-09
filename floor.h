@@ -7,7 +7,7 @@
 #include <string>
 
 class Player;
-// class Enemy;
+class Enemy;
 class Potion;
 class Treasure;
 class Chamber;
@@ -16,7 +16,7 @@ class Character;
 class Floor{
 private:
     std::shared_ptr<Player> player;
-    // std::vector<std::shared_ptr<Enemy>> enemies;
+    std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<Potion>> potions;
     std::vector<std::shared_ptr<Treasure>> treasures;
     std::vector<std::shared_ptr<Chamber>> chambers;
@@ -54,6 +54,8 @@ public:
     // void move(std::shared_ptr<Item>, int, int);
 
     // std::vector<int> getPos(int, int);
+
+    void enemyAttackMove();
 
 
 };

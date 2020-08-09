@@ -9,14 +9,16 @@
 class Treasure: public Item{
     int amount;
     bool pick;
+    int type;
 
     public:
-    Treasure(int, int, int);
+    Treasure(int, int, int, int);
     ~Treasure() { }
     int getAmt();
     bool getPick();
     void setAmt(int);
     void setPick(bool);
+    int getType();
 };
 
 #endif

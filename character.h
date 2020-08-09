@@ -10,7 +10,6 @@ protected:
     int defense;
     int row;
     int col;
-    std::shared_ptr<Gold> gold;
 
 public:
     Character(int, int, int, int, int);
@@ -18,7 +17,6 @@ public:
     int getHP();
     int getAtk();
     int getDF();
-    std::shared_ptr<Gold> getGold();
     int getRow();
     int getCol();
     void moveRow(int);
