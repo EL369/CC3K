@@ -9,6 +9,7 @@
 #include "player/shade.h"
 // #include "enemy/dwarf.h"
 
+class Shade;
 
 class Enemy : public Character{
     protected:
@@ -17,11 +18,11 @@ class Enemy : public Character{
     public:
     Enemy(int, int, int, int, int, bool);
     bool getHostile();
-    virtual void attackEnemy(std::shared_ptr<Shade>);
-    // virtual void attackEnemy(std::shared_ptr<Drow>);
-    // virtual void attackEnemy(std::shared_ptr<Vampire>);
-    // virtual void attackEnemy(std::shared_ptr<Troll>);
-    // virtual void attackEnemy(std::shared_ptr<Goblin>);
+    virtual void attackEnemy(Shade &);
+    // virtual void attackEnemy(Drow &);
+    // virtual void attackEnemy(Vampire &);
+    // virtual void attackEnemy(Troll &);
+    // virtual void attackEnemy(Goblin &);
     // virtual void move() = 0;
 };
 

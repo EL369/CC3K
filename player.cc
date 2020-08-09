@@ -1,10 +1,43 @@
 #include "player.h"
+#include "enemy.h"
 
 
 Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP):
     Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP} { }
 
 Player::~Player(){}
+
+void Player::usePotion(std::shared_ptr<Potion> potion){
+    int type = potion->getType();
+    if (type == 0){
+        if (health+10 >= maxHP){
+            health = maxHP;
+        }
+        else{
+            health += 10;
+        }
+    }
+    else if (type == 1){
+        attack += 5;
+    }
+    else if (type == 2){
+        defense += 5;
+    }
+    else if (type == 3){
+        if (health-10 <= 0){
+            health = 0;
+        }
+        else{
+            health -= 10;
+        }
+    }
+    else if (type == 4){
+        attack -= 5;
+    }
+    else if (type == 5){
+        defense -= 5;
+    }
+}
 
 void Player::move(std::string str){
     if (str == "no"){
@@ -57,3 +90,4 @@ void Player::setFloor(int id){
 void Player::setChamber(int id){
     chamberID = id;
 }
+

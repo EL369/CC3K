@@ -7,7 +7,6 @@
 #include "character.h"
 #include "treasure.h"
 #include "potion.h"
-#include "enemy.h"
 
 
 class Enemy;
@@ -22,9 +21,9 @@ class Player: public Character{
     public:
     Player(int, int, int, int, int, int, int, int);
     virtual ~Player();
-    virtual void accept(std::shared_ptr <Enemy>) = 0;
+    virtual void accept(Enemy &) = 0;
     // virtual void attack(std::shared_ptr <Enemy>) = 0;
-    // virtual void usePotion();
+    virtual void usePotion(std::shared_ptr<Potion>);
     void move(std::string);
     int getFloorID();
     int getChamberID();
