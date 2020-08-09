@@ -8,7 +8,6 @@
 #include "player.h"
 #include "player/shade.h"
 // #include "enemy/dwarf.h"
-#include "enemy/human.h"
 
 
 class Enemy : public Character{
@@ -19,8 +18,8 @@ class Enemy : public Character{
     Enemy(int, int, int, int, int, bool);
     bool getHostile();
     virtual void attackEnemy(std::shared_ptr<Shade>);
-    //virtual void attackEnemy(std::shared_ptr<Drow>);
-    //virtual void attackEnemy(std::shared_ptr<Vampire>);
+    // virtual void attackEnemy(std::shared_ptr<Drow>);
+    // virtual void attackEnemy(std::shared_ptr<Vampire>);
     // virtual void attackEnemy(std::shared_ptr<Troll>);
     // virtual void attackEnemy(std::shared_ptr<Goblin>);
     // virtual void move() = 0;
