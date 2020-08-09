@@ -4,6 +4,8 @@
 Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP):
     Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP} { }
 
+Player::~Player(){}
+
 void Player::move(std::string str){
     if (str == "no"){
         moveRow(-1);

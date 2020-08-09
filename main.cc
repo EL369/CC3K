@@ -5,6 +5,8 @@
 #include <string>
 
 #include "floor.h"
+#include "player/shade.h"
+#include "player.h"
 
 std::string defaultFile ="cc3kfloor.txt";
 
@@ -39,11 +41,6 @@ int main(int argc, char* argv[]) {
             ++id;
             row = 0;
         }
-    }(floors[0])->print();
-    floors[0]->generateChambers();
-    // std::shared_ptr<Player> p = std::make_shared<Player>();
-    // floors[0]->generatePlayer();
-    // (floors[0])->print();
-    floors[0]->generateStair();
-    (floors[0])->print();
+    }
+    (floors[0])->generateAll();
 }
