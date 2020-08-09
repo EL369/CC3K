@@ -11,7 +11,7 @@ class Potion: public Item{
     int type;
 
     public:
-    Potion(int, int, int, std::string);
+    Potion(int, int, int, int);
     ~Potion() { }
     int getEffect();
     int getType();
