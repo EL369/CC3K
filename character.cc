@@ -1,5 +1,8 @@
 #include "character.h"
-
+#include "item/shoard.h"
+#include "item/normal.h"
+#include "item/merchantHoard.h"
+#include "item/dHoard.h"
 
 Character::Character(int h, int atk, int def, int row, int col):
     health{h}, attack{atk}, defense{def}, row{row}, col{col} { }
@@ -16,9 +19,6 @@ int Character::getDF(){
     return defense;
 }
 
-std::shared_ptr<Gold> Character::getGold(){
-    return gold;
-}
 
 int Character::getRow(){
     return row;
