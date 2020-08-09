@@ -7,10 +7,11 @@
 #include "character.h"
 #include "treasure.h"
 #include "potion.h"
+#include "enemy.h"
 
 
-class Gold;
 class Enemy;
+class Gold;
 
 class Player: public Character{
     protected:

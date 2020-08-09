@@ -3,6 +3,8 @@
 
 #include "../player.h"
 
+class Enemy;
+
 class Shade: public Player{
     public:
     Shade();
