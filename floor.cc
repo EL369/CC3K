@@ -127,6 +127,7 @@ void Floor::generateAll(){
         potions.emplace_back(potion);
     }
     // gold: 5/8 chance of normal, 1/8 dragon hoard, 2/8 small hoard
+    /*
     for(int i=0; i<10; ++i){
          std::srand(time(NULL));
          int type = rand() % 8;
@@ -141,6 +142,7 @@ void Floor::generateAll(){
          generateTreasure(t);
          treasures.emplace_back(t);
     }
+    */
     print();
 }
 
