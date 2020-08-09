@@ -10,4 +10,3 @@ class Human: public Enemy{
 };
 
 #endif
- 
