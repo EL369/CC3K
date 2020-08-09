@@ -28,6 +28,8 @@ public:
 
     void erase(int, int);
 
+    bool validPos(int, int);
+
     // void add(int, int, char);
 
     char getPos (int, int);
