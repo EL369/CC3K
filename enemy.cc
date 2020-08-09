@@ -5,8 +5,9 @@
 using namespace std;
 
 shared_ptr<Enemy> concreteLevel::getEnemy() {
+    shared_ptr<Enemy> e;
     if (level == 'H'){
-        return shared_ptr<Human> (new Human);
+        e = make_shared<Human>();
     }
     /*
     else if (level == 'W'){
@@ -17,6 +18,7 @@ shared_ptr<Enemy> concreteLevel::getEnemy() {
     }
 
     */
+   return e;
 }
 
 concreteLevel::concreteLevel(const char& c):

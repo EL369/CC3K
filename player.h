@@ -23,7 +23,7 @@ class Player: public Character{
     Player(int, int, int, int, int, int, int, int);
     virtual ~Player();
     virtual void accept(Enemy &) = 0;
-    // virtual void attack(std::shared_ptr <Enemy>) = 0;
+    // virtual void attackEnemy(std::shared_ptr <Enemy>) = 0;
     virtual void usePotion(std::shared_ptr<Potion>);
     void move(std::string);
     int getFloorID();

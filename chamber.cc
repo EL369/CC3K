@@ -52,7 +52,7 @@ bool Chamber::validPos(int x, int y){
 
 //Generates the char in random position within range of this Chamber, returns the position
 std::vector<int> Chamber::generateCharRand(char c){
-    std::cout<<"generate char"<<std::endl;
+    // std::cout<<"generate char"<<std::endl;
 
     int x;
     int y;
@@ -91,7 +91,10 @@ bool Chamber::inChamber(std::shared_ptr<Character> c){
 bool Chamber::inChamber(std::shared_ptr<Item> i){
     int row = i->getRow();
     int col = i->getCol();
-    if(row >= topLeftX && col >= topLeftY && row < topLeftX+width && col < topLeftY+height){
+    if(id == 1){
+        if(col >= topLeftX && row >= 7 && col <= 60) return false;
+    }
+    if(col >= topLeftX && row >= topLeftY && col < topLeftX+width && row < topLeftY+height){
         return true;
     }return false;
 }

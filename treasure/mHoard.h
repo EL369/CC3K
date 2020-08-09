@@ -1,5 +1,5 @@
-#ifndef _MERCHANTHOARD_h_
-#define _MERCHANTHOARD_h_
+#ifndef _MHOARD_h_
+#define _MHOARD_h_
 
 #include "../treasure.h"
 
