@@ -3,7 +3,7 @@
 
 
 Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP):
-    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP} { }
+    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0} { }
 
 Player::~Player(){}
 
@@ -83,6 +83,10 @@ int Player::getMaxHP(){
     return maxHP;
 }
 
+int Player::getGold(){
+    return gold;
+}
+
 void Player::setFloor(int id){
     floorID = id;
 }
@@ -91,3 +95,6 @@ void Player::setChamber(int id){
     chamberID = id;
 }
 
+void Player::addGold(int g){
+    gold += g;
+}

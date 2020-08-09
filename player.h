@@ -17,6 +17,7 @@ class Player: public Character{
     int floorID;
     int chamberID;
     int maxHP;
+    int gold;
     std::shared_ptr<Potion> potion;
     public:
     Player(int, int, int, int, int, int, int, int);
@@ -28,8 +29,10 @@ class Player: public Character{
     int getFloorID();
     int getChamberID();
     int getMaxHP();
+    int getGold();
     void setFloor(int);
     void setChamber(int);
+    void addGold(int);
 };
 
 #endif
