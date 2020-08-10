@@ -231,6 +231,9 @@ void Floor::enemyAttackMove(){
             */
         }
     }
+    if (player->getHP() <= 0){
+        player->setAlive(false);
+    }
 }
 
 std::vector<int> Floor::nextMove(std::string str){
@@ -277,6 +280,15 @@ void Floor::playerAttack(std::string str){
     if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M' || grid[y][x] == 'D'){
         int at = enemyAt(y, x);
         player->attackEnemy(enemies[at]);
+        // if the enemy that player attack is a merchant, all merchants are set to be hostile.  
+        if (grid[y][x] == 'H'){
+            int s = enemies.size();
+            for(int i = 0; i < s; i++){
+                if (enemies[i]->getType() == 'M'){
+                    enemies[i]->setHostile(true);
+                }
+            }
+        }
         if(enemies[at]->getHP() <= 0){
             std::cout << enemies[at]->getType() << " is killed" << std::endl;
             int size = enemies.size();

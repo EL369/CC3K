@@ -40,6 +40,10 @@ bool Enemy::getHostile(){
     return isHostile;
 }
 
+void Enemy::setHostile(bool b){
+    isHostile = b;
+}
+
 void Enemy::attackPlayer(Shade& shade){
     int def = shade.getDF();
     int atk = attack;

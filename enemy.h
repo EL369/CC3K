@@ -20,6 +20,7 @@ class Enemy : public Character{
     Enemy(int, int, int, int, int, char, bool);
     char getType();
     bool getHostile();
+    void setHostile(bool);
     virtual void attackPlayer(Shade &);
     // virtual void attackPlayer(Drow &);
     // virtual void attackPlayer(Vampire &);
