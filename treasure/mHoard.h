@@ -5,7 +5,7 @@
 
 class Mhoard: public Treasure{
     public:
-    Mhoard(): Treasure{0, 0, 4, 2} { }
+    Mhoard(): Treasure{0, 0, 4, 8} { }
 };
 
 
