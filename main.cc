@@ -42,5 +42,37 @@ int main(int argc, char* argv[]) {
             row = 0;
         }
     }
-    (floors[0])->generateAll();
+    std::cout<<"Please choose your character: \ns for shade(defualt), d for drow, v for vampire, t for troll, g for goblin"<<std::endl;
+    char playerChar;
+    std::shared_ptr<Player> player;
+    while (true){
+        std::cin>>playerChar;
+        if(playerChar == 's'){
+            player = std::make_shared<Shade>();
+            break;
+        }
+        //else if
+        else{
+            playerChar = 's';
+            player = std::make_shared<Shade>();
+            break;
+        }
+    }
+    std::cout<<"Your character is: "<<playerChar<<std::endl;
+    std::cout<<"Generating the floor..."<<std::endl;
+    (floors[0])->generateAll(player);
+    std::string cmd, arg;
+    while (std::cin>>cmd){
+        if(cmd == "no" || cmd== "so" || cmd == "ea" || cmd == "we" || cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw"){
+            (floors[0])->playerMove(cmd);
+        }else if (cmd == "u"){
+            std::cin>>arg;
+            (floors[0])->playerUsePotion(arg);
+        }else if (cmd == "a"){
+            std::cin>>arg;
+            (floors[0])->playerAttack(arg);
+        }else{
+            std::cout<<"invald command"<<std::endl;
+        }floors[0]->print();
+    }
 }

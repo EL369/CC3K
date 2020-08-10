@@ -1,11 +1,18 @@
 #include "player.h"
 #include "enemy.h"
 
-
-Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP):
-    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0}, alive{true} { }
+Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP, std::string type):
+    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0}, alive{true}, type{type} { }
 
 Player::~Player(){}
+
+std::string Player::getType(){
+    return type;
+}
+
+void Player::setType(std::string s){
+    type = s;
+}
 
 void Player::usePotion(std::shared_ptr<Potion> potion){
     int type = potion->getType();

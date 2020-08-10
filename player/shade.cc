@@ -5,7 +5,7 @@
 
 
 Shade::Shade(): 
-    Player{125,25,25,0,0,0,0,125} { }
+    Player{125,25,25,0,0,0,0,125,"Shade"} { }
 
 void Shade::accept(Enemy& enemy){
     int i = rand() % 2;
