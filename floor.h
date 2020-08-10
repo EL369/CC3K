@@ -22,6 +22,7 @@ private:
     std::vector<std::shared_ptr<Chamber>> chambers;
     std::vector<std::vector<char>> grid;
     int id;
+    std::string action = "Player enters the floor";
 
 public:
     Floor( std::vector<std::vector<char>> grid, int id);
@@ -33,12 +34,13 @@ public:
     std::vector<std::shared_ptr<Potion>> getPotions();
     std::vector<std::shared_ptr<Treasure>> getTreasures();
     std::vector<std::shared_ptr<Chamber>> getChambers();
+    int getId();
 
     void print();
 
-    void generateAll();
+    void generateAll(std::shared_ptr<Player>);
 
-    void generate();
+    // generation
     void generateChambers();
     void generatePlayer(std::shared_ptr<Player>);
     void generatePotion(std::shared_ptr<Potion>);

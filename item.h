@@ -8,14 +8,17 @@ class Item{
 protected:
     int row;
     int col;
+    char originalChar;
 
 public:
-    Item(int, int);
+    Item(int, int, char c = '.');
     ~Item() { }
     int getRow();
     int getCol();
+    char getOrigin();
     void setRow(int);
     void setCol(int);
+    void setOrigin(char);
 
 };
 

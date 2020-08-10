@@ -53,7 +53,6 @@ bool Chamber::validPos(int x, int y){
 //Generates the char in random position within range of this Chamber, returns the position
 std::vector<int> Chamber::generateCharRand(char c){
     // std::cout<<"generate char"<<std::endl;
-
     int x;
     int y;
     while(true){
@@ -67,7 +66,7 @@ std::vector<int> Chamber::generateCharRand(char c){
     }std::vector<int> pos;
     pos.emplace_back(x);
     pos.emplace_back(y);
-    std::cout<<pos[0]<<" "<<pos[1]<<std::endl;
+    // std::cout<<pos[0]<<" "<<pos[1]<<std::endl;
     return pos;
 }
 

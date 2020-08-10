@@ -4,8 +4,8 @@
 #include "treasure/mHoard.h"
 #include "treasure/dHoard.h"
 
-Character::Character(int h, int atk, int def, int row, int col):
-    health{h}, attack{atk}, defense{def}, row{row}, col{col} { }
+Character::Character(int h, int atk, int def, int row, int col, char c):
+    health{h}, attack{atk}, defense{def}, row{row}, col{col}, originalChar{c}{ }
 
 int Character::getHP(){
     return health;
@@ -26,6 +26,10 @@ int Character::getRow(){
 
 int Character::getCol(){
     return col;
+}
+
+char Character::getOrigin(){
+    return originalChar;
 }
 
 void Character::moveRow(int r){
@@ -54,4 +58,8 @@ void Character::setRow(int r){
 
 void Character::setCol(int c){
     col = c;
+}
+
+void Character::setOrigin(char c){
+    originalChar = c;
 }
