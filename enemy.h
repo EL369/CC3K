@@ -13,32 +13,34 @@ class Shade;
 
 class Enemy : public Character{
     protected:
+    char type;
     bool isHostile;
 
     public:
-    Enemy(int, int, int, int, int, bool);
+    Enemy(int, int, int, int, int, char, bool);
+    char getType();
     bool getHostile();
-    virtual void attackEnemy(Shade &);
-    // virtual void attackEnemy(Drow &);
-    // virtual void attackEnemy(Vampire &);
-    // virtual void attackEnemy(Troll &);
-    // virtual void attackEnemy(Goblin &);
+    virtual void attackPlayer(Shade &);
+    // virtual void attackPlayer(Drow &);
+    // virtual void attackPlayer(Vampire &);
+    // virtual void attackPlayer(Troll &);
+    // virtual void attackPlayer(Goblin &);
     // virtual void move() = 0;
 };
 
-class Level{
+class Type{
     virtual std::shared_ptr<Enemy> getEnemy() = 0;
     public:
-    virtual ~Level() { }
-    virtual void setLevel(const char &) = 0;
+    virtual ~Type() { }
+    virtual void setType(const char &) = 0;
 };
 
-class concreteLevel: public Level{
-    char level;
+class concreteType: public Type{
+    char type;
     std::shared_ptr<Enemy> getEnemy() override;
     public:
-    concreteLevel(const char&);
-    void setLevel(const char&) override;
+    concreteType(const char&);
+    void setType(const char&) override;
 };
 
 

@@ -7,7 +7,7 @@
 class Dwarf: public Enemy{
     friend class concreteLevel;
     public:
-    Dwarf(): Enemy{100,20,30,0,0,false} { }
+    Dwarf(): Enemy{100,20,30,0,0,'W',false} { }
 };
 
 #endif

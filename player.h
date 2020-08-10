@@ -18,13 +18,15 @@ class Player: public Character{
     int chamberID;
     int maxHP;
     int gold;
-    std::shared_ptr<Potion> potion;
+    bool alive;
+    std::vector<std::shared_ptr<Potion>> tempPotion;
+
     public:
     Player(int, int, int, int, int, int, int, int);
     virtual ~Player();
     virtual void accept(Enemy &) = 0;
-    // virtual void attackEnemy(std::shared_ptr <Enemy>) = 0;
-    virtual void usePotion(std::shared_ptr<Potion>);
+    virtual void attackEnemy(std::shared_ptr <Enemy>) = 0;
+    void usePotion(std::shared_ptr<Potion>);
     void move(std::string);
     int getFloorID();
     int getChamberID();
@@ -33,6 +35,11 @@ class Player: public Character{
     void setFloor(int);
     void setChamber(int);
     void addGold(int);
+
+    void setAlive(bool);
+    //add only temporary potion to tempPotion.
+    void addPotion(std::shared_ptr<Potion>);
+    void removeTempPotion();
 };
 
 #endif

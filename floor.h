@@ -55,11 +55,18 @@ public:
 
     // std::vector<int> getPos(int, int);
 
-    std::vector<int> existNear(char, int, int);
+    // std::vector<int> existNear(char, int, int);
 
-    void enemyAttackMove(std::shared_ptr<Enemy> e);
-
-
+    //return true if there's an enemy in the current position
+    int treasureAt(int row, int col);
+    int potionAt(int row, int col);
+    bool isRegularEnemy(int, int);
+    int enemyAt(int, int);
+    std::vector<int> nextMove(std::string);
+    void enemyAttackMove();
+    void playerAttack(std::string);
+    void playerMove(std::string);
+    void playerUsePotion(std::string);
 };
 
 #endif

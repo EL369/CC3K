@@ -6,7 +6,7 @@
 class Human: public Enemy{
     friend class concreteLevel;
     public:
-    Human(): Enemy{140,20,20,0,0,false} { }
+    Human(): Enemy{140,20,20,0,0,'H',false} { }
 };
 
 #endif

@@ -11,7 +11,7 @@ class Shade: public Player{
     Shade();
     ~Shade() {}
     void accept(Enemy &) override;
-    // void attack(std::shared_ptr <Enemy>) override;
+    void attackEnemy(std::shared_ptr <Enemy>) override;
 };
 
 #endif

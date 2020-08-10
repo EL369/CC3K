@@ -4,16 +4,16 @@
 
 using namespace std;
 
-shared_ptr<Enemy> concreteLevel::getEnemy() {
+shared_ptr<Enemy> concreteType::getEnemy() {
     shared_ptr<Enemy> e;
-    if (level == 'H'){
+    if (type == 'H'){
         e = make_shared<Human>();
     }
     /*
-    else if (level == 'W'){
+    else if (type == 'W'){
         return shared_ptr<Dwarf> (new Dwarf);
     }
-    else if (level == 'V'){
+    else if (type == 'V'){
         return shared_ptr<Vampire> (new Vampire);
     }
 
@@ -21,17 +21,26 @@ shared_ptr<Enemy> concreteLevel::getEnemy() {
    return e;
 }
 
-concreteLevel::concreteLevel(const char& c):
-    level{c} { }
+concreteType::concreteType(const char& c):
+    type{c} { }
 
-void concreteLevel::setLevel(const char& c){
-    level = c;
+void concreteType::setType(const char& c){
+    type = c;
 }
 
-Enemy::Enemy(int hp, int atk, int def, int row, int col, bool hostile):
-    Character{hp, atk, def, row, col}, isHostile{hostile} { }
+Enemy::Enemy(int hp, int atk, int def, int row, int col, char type, bool hostile):
+    Character{hp, atk, def, row, col}, type{type}, isHostile{hostile} { }
 
-void Enemy::attackEnemy(Shade& shade){
+char Enemy::getType(){
+    return type;
+}
+
+
+bool Enemy::getHostile(){
+    return isHostile;
+}
+
+void Enemy::attackPlayer(Shade& shade){
     int def = shade.getDF();
     int atk = attack;
     double dmg = (100/(100+def)*atk);
@@ -40,7 +49,7 @@ void Enemy::attackEnemy(Shade& shade){
 }
 
 /*
-void Enemy::attackEnemy(Drow& drow){
+void Enemy::attackPlayer(Drow& drow){
     int def = drow.getDF();
     int atk = attack;
     double dmg = (100/(100+def)*atk);
@@ -48,7 +57,7 @@ void Enemy::attackEnemy(Drow& drow){
     drow.addHP(-damage);
 }
 
-void Enemy::attackEnemy(Vampire& vampire){
+void Enemy::attackPlayer(Vampire& vampire){
     int def = vampire.getDF();
     int atk = attack;
     double dmg = (100/(100+def)*atk);
@@ -56,7 +65,7 @@ void Enemy::attackEnemy(Vampire& vampire){
     vampire.addHP(-damage);
 }
 
-void Enemy::attackEnemy(Troll& troll){
+void Enemy::attackPlayer(Troll& troll){
     int def = troll.getDF();
     int atk = attack;
     double dmg = (100/(100+def)*atk);
@@ -64,7 +73,7 @@ void Enemy::attackEnemy(Troll& troll){
     troll.addHP(-damage);
 }
 
-void Enemy::attackEnemy(Goblin& goblin){
+void Enemy::attackPlayer(Goblin& goblin){
     int def = goblin.getDF();
     int atk = attack;
     double dmg = (100/(100+def)*atk);
@@ -72,7 +81,3 @@ void Enemy::attackEnemy(Goblin& goblin){
     goblin.addHP(-damage);
 }
 */
-
-bool Enemy::getHostile(){
-    return isHostile;
-}

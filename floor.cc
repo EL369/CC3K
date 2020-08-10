@@ -3,7 +3,7 @@
 #include "enemy.h"
 #include "potion.h"
 #include "treasure.h"
-#include "treasure/shoard.h"
+#include "treasure/sHoard.h"
 #include "treasure/gold.h"
 #include "treasure/mHoard.h"
 #include "treasure/dHoard.h"
@@ -165,59 +165,257 @@ void Floor::move(std::shared_ptr<Character>, int initX, int initY, int newX, int
     }
 }
 
-
-// Enemies detect whether there's player within 1 block around. 
-// void Floor::enemyAttackMove(){
-//     int prow = player->getRow();
-//     int pcol = player->getCol();
-//     for (int y = prow-1; y <= prow+1; y++){
-//         for (int x = pcol-1; x <= pcol+1; x++){
-//             if (grid[y][x] == 'H'){
-//                 int enemyAt = 0;
-//                 int sizeEnemy = enemies.size();
-//                 for(int i = 0; i < sizeEnemy; i++){
-//                     if(enemies[i]->getCol() == x && enemies[i]->getRow() == y){
-//                         enemyAt = i;
-//                         break;
-//                     }
-//                 }
-//                 if (enemies[enemyAt]->getHostile() == true){
-//                     player->accept(*enemies[enemyAt]);
-//                 }
-//             }
-//             /*
-//             else if (grid[y][x] == 'D'){
-
-//             }
-//             */
-//         }
-//     }
-// }
-
-// if returned {0, 0} means char not found
-std::vector<int> Floor::existNear(char a, int row, int col){
-    std::vector<int> pos;
-    int r;
-    int c;
-    for (int y = row-1; y <= row+1; y++){
-        for (int x = col-1; x <= col+1; x++){
-            if(grid[row][col] == a){
-                r = y;
-                c = x;
-            }
+int Floor::treasureAt(int row, int col){
+    int sizeTreasure = treasures.size();
+    int at = -1;
+    for(int i = 0; i < sizeTreasure; i++){
+        if(treasures[i]->getCol() == col && treasures[i]->getRow() == row){
+            at = i;
+            break;
         }
     }
-    pos.emplace_back(r);
-    pos.emplace_back(c);
+    return at;
+}
+
+int Floor::potionAt(int row, int col){
+    int sizePotion = potions.size();
+    int at = -1;
+    for(int i = 0; i < sizePotion; i++){
+        if(potions[i]->getCol() == col && potions[i]->getRow() == row){
+            at = i;
+            break;
+        }
+    }
+    return at;
+}
+
+//helper
+bool Floor::isRegularEnemy(int row, int col){
+    if (grid[row][col] == 'W' || grid[row][col] == 'E' || grid[row][col] == 'O' || grid[row][col] == 'L'){
+            return true;
+        }
+    else{
+        return false;
+    }
+}
+
+// return the index of enemy at grid[row][col] in the vector of enemies. 
+int Floor::enemyAt(int row, int col){
+    int sizeEnemy = enemies.size();
+    int at = -1;
+    for(int i = 0; i < sizeEnemy; i++){
+        if(enemies[i]->getCol() == col && enemies[i]->getRow() == row){
+            at = i;
+            break;
+        }
+    }
+    return at;
+}
+
+// Enemies detect whether there's player within 1 block around. 
+void Floor::enemyAttackMove(){
+    int prow = player->getRow();
+    int pcol = player->getCol();
+    for (int y = prow-1; y <= prow+1; y++){
+        for (int x = pcol-1; x <= pcol+1; x++){
+            if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M'){
+                int at = enemyAt(y, x);
+                if (enemies[at]->getHostile() == true){
+                    player->accept(*enemies[at]);
+                }
+            }
+            /*
+            else if (grid[y][x] == 'D'){
+
+            }
+            */
+        }
+    }
+}
+
+std::vector<int> Floor::nextMove(std::string str){
+    std::vector<int> pos;
+    int row = player->getRow();
+    int col = player->getCol();
+    if (str == "no"){
+        row -= 1;
+    }
+    else if (str == "so"){
+        row += 1;
+    }
+    else if (str == "ea"){
+        col += 1;
+    }
+    else if (str == "we"){
+        col -= 1;
+    }
+    else if (str == "ne"){
+        row -= 1;
+        col += 1;
+    }
+    else if (str == "nw"){
+        row -= 1;
+        col -= 1;
+    }
+    else if (str == "se"){
+        row += 1;
+        col += 1;
+    }
+    else if (str == "sw"){
+        row += 1;
+        col -= 1;
+    }
+    pos.emplace_back(row);
+    pos.emplace_back(col);
     return pos;
 }
 
-void Floor::enemyAttackMove(std::shared_ptr<Enemy> e){
-    int eRow = e->getRow();
-    int eCol = e->getCol();
-    int pRow = player->getRow();
-    int pCol = player->getCol();
-    if (pRow >= eRow-1 && pRow <= eRow && pCol >= eCol-1 && pCol <= eCol+1){
-        player->accept(*e);  // Attack method need to specify player type.
+void Floor::playerAttack(std::string str){
+    std::vector<int> pos = nextMove(str);
+    int y = pos[0];
+    int x = pos[1];
+    if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M' || grid[y][x] == 'D'){
+        int at = enemyAt(y, x);
+        player->attackEnemy(enemies[at]);
+        if(enemies[at]->getHP() <= 0){
+            std::cout << enemies[at]->getType() << " is killed" << std::endl;
+            int size = enemies.size();
+            size -= 1;
+            for (int j = at; j < size; j++){
+                enemies[j] = enemies[j+1];
+            }
+            enemies.resize(size);
+            if (isRegularEnemy(y,x)){
+                int i = rand() % 2;
+                if (i == 0){
+                    player->addGold(1);
+                    std::cout << "A small pile is added to your pocket" << std::endl;
+                }
+                else{
+                    player->addGold(2);
+                    std::cout << "A Normal pile is added to your pocket" << std::endl;
+                }
+                grid[y][x] = '.';
+            }
+            else if (grid[y][x] == 'H'){
+                grid[y][x] = '6';
+                auto normal1 = std::make_shared<Gold>();
+                treasures.emplace_back(normal1);
+                int acc = 1;
+                // Another normal pile a generated nearby. 
+                for(int i = y-1 ; i <= y+1; i++){
+                    if (acc == 1){
+                        break;
+                    }
+                    for(int j = x-1 ; j <= x+1; j++){
+                        if (grid[i][j] == '.'){
+                            grid[i][j] = '6';
+                            auto normal = std::make_shared<Gold>();
+                            treasures.emplace_back(normal);
+                            acc += 1;
+                            break;
+                        }
+                    }
+                }
+                std::cout << "Two Normal pile is dropped" << std::endl;
+            }
+            /*
+            else if (grid[y][x] == 'M'){
+                auto merchantH = std::make_shared<Mhoard>();
+                treasures.emplace_back(merchantH);
+                grid[y][x] = '8';
+            }
+            else{
+                grid[y][x] = '.';
+            }
+            */
+        }
     }
 }
+
+
+void Floor::playerMove(std::string str){
+    std::vector<int> pos = nextMove(str);
+    int y = pos[0];
+    int x = pos[1];
+    if (grid[y][x] == '.' || grid[y][x] == '+' ||  grid[y][x] == '#'){
+        player->move(str);
+    }
+    else if (grid[y][x] == '6' || grid[y][x] == '7' || grid[y][x] == '8' || grid[y][x] == '9'){
+        int at = treasureAt(y, x);
+        if (treasures[at]->getPick() == true){
+            int amt = treasures[at]->getAmt();
+            player->addGold(amt);
+            int size = treasures.size();
+            size -= 1;
+            for (int j = at; j < size; j++){
+                treasures[j] = treasures[j+1];
+            }
+            treasures.resize(size);
+            player->move(str);
+        }
+        else{
+            std::cout << "treasures cannot be picked" << std::endl;
+        }
+    }
+    else{
+        std::cout << "invalid movement" << std::endl;
+    }
+}
+
+void Floor::playerUsePotion(std::string str){
+    std::vector<int> pos = nextMove(str);
+    int y = pos[0];
+    int x = pos[1];
+    if (grid[y][x] == '0' || grid[y][x] == '1' || grid[y][x] == '2' || grid[y][x] == '3'
+            || grid[y][x] == '4' || grid[y][x] == '5'){
+        int at = potionAt(y, x);
+        if (grid[y][x] == '0' || grid[y][x] == '3'){
+            player->usePotion(potions[at]);
+        }
+        else{
+            player->usePotion(potions[at]);
+            player->addPotion(potions[at]);
+        }
+        int size = potions.size();
+        size -= 1;
+        for (int j = at; j < size; j++){
+            potions[j] = potions[j+1];
+        }
+        potions.resize(size);
+        grid[y][x] = '.';
+        player->move(str);
+    }
+    else{
+        std::cout << "No potion in this direction" << std::endl;
+    }
+}
+
+// if returned {0, 0} means char not found
+// std::vector<int> Floor::existNear(char a, int row, int col){
+//     std::vector<int> pos;
+//     int r;
+//     int c;
+//     for (int y = row-1; y <= row+1; y++){
+//         for (int x = col-1; x <= col+1; x++){
+//             if(grid[row][col] == a){
+//                 r = y;
+//                 c = x;
+//             }
+//         }
+//     }
+//     pos.emplace_back(r);
+//     pos.emplace_back(c);
+//     return pos;
+// }
+
+// void Floor::enemyAttackMove(std::shared_ptr<Enemy> e){
+//     int eRow = e->getRow();
+//     int eCol = e->getCol();
+//     int pRow = player->getRow();
+//     int pCol = player->getCol();
+//     if (pRow >= eRow-1 && pRow <= eRow && pCol >= eCol-1 && pCol <= eCol+1){
+//         player->accept(*e);  // Attack method need to specify player type.
+//     }
+// }
+
