@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
         }else{
             std::cout<<"invald command"<<std::endl;
         }
-        floors[0]->enemyAttackMove();
+        floors[0]->enemyAttackPlayer();
         if (enemyMoving == true){
             floors[0]->Enemymove();
         }

@@ -286,7 +286,7 @@ int Floor::enemyAt(int row, int col){
 }
 
 // Enemies detect whether there's player within 1 block around. 
-void Floor::enemyAttackMove(){
+void Floor::enemyAttackPlayer(){
     int prow = player->getRow();
     int pcol = player->getCol();
     int acc = -1;

@@ -68,7 +68,7 @@ public:
     bool isRegularEnemy(int, int);
     int enemyAt(int, int);
     std::vector<int> nextMove(std::string);
-    void enemyAttackMove();
+    void enemyAttackPlayer();
     void playerAttack(std::string);
     void playerMove(std::string);
     void playerUsePotion(std::string);
