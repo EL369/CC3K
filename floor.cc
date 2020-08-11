@@ -448,8 +448,10 @@ void Floor::playerAttack(std::string str){
             else if (grid[y][x] == 'H'){
                 grid[y][x] = 'G';
                 auto normal1 = std::make_shared<Gold>();
+                normal1->setRow(y);
+                normal1->setCol(x);
                 treasures.emplace_back(normal1);
-                int acc = 1;
+                int acc = 0;
                 // Another normal pile a generated nearby. 
                 for(int i = y-1 ; i <= y+1; i++){
                     if (acc == 1){
