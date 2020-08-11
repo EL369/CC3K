@@ -1,13 +1,13 @@
-#include "shade.h"
+#include "troll.h"
 #include <cstdlib>
 #include <cmath>
 
 
-Shade::Shade(): 
-    Player{125,25,25,0,0,0,0,125,"Shade"} { }
+Troll::Troll(): 
+    Player{120,25,15,0,0,0,0,120,"Troll"} { }
 
-void Shade::accept(Enemy& enemy){
-    if (enemy.getType() == 'E'){ // elf get two attacks against Shade
+void Troll::accept(Enemy& enemy){
+    if (enemy.getType() == 'E'){ // elf get two attacks against Troll
         int i = rand() % 2;
         if (i == 0){
             std::cout << enemy.getType() << " attacks you:" << std::endl;
@@ -27,7 +27,7 @@ void Shade::accept(Enemy& enemy){
     }
 }
 
-void Shade::attackEnemy(std::shared_ptr <Enemy> enemy){
+void Troll::attackEnemy(std::shared_ptr <Enemy> enemy){
     int def = enemy->getDF();
     int atk = attack;
     int damage = ceil((100.0/(100+def))*atk);
@@ -36,4 +36,11 @@ void Shade::attackEnemy(std::shared_ptr <Enemy> enemy){
     damage *= -1;
     enemy->addHP(damage);
     std::cout << "  Enemy's health now is: " << enemy->getHP() << std::endl;
+    if (health+5 >= maxHP){
+        health = maxHP;
+    }
+    else{
+        health += 5;
+    }
+    std::cout << "  You gain 5 HP in this turn"<< std::endl;
 }

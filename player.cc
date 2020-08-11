@@ -1,7 +1,7 @@
 #include "player.h"
 #include "enemy.h"
 
-Player::Player(int h, int atk, int def, int row, int col, int floor, int chamber, int maxHP, std::string type):
+Player::Player(double h, double atk, double def, int row, int col, int floor, int chamber, int maxHP, std::string type):
     Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0}, alive{true}, type{type} { }
 
 Player::~Player(){}
@@ -14,6 +14,9 @@ void Player::setType(std::string s){
     type = s;
 }
 
+bool Player::getAlive(){
+    return alive;
+}
 void Player::usePotion(std::shared_ptr<Potion> potion){
     int type = potion->getType();
     if (type == 0){

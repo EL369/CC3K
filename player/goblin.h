@@ -1,14 +1,14 @@
-#ifndef _SHADE_h_
-#define _SHADE_h_
+#ifndef _GOBLIN_h_
+#define _GOBLIN_h_
 
 #include "../player.h"
 #include "../enemy.h"
 
 class Enemy;
 
-class Shade: public Player{
+class Goblin: public Player{
     public:
-    Shade();
+    Goblin();
     void accept(Enemy &) override;
     void attackEnemy(std::shared_ptr <Enemy>) override;
 };

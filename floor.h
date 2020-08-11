@@ -59,6 +59,9 @@ public:
 
     // std::vector<int> existNear(char, int, int);
 
+    void EnemymoveHelper(int);
+    void Enemymove();
+
     //return true if there's an enemy in the current position
     int treasureAt(int row, int col);
     int potionAt(int row, int col);

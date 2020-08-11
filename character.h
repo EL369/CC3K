@@ -5,27 +5,27 @@ class Gold;
 
 class Character{
 protected:
-    int health;
-    int attack;
-    int defense;
+    double health;
+    double attack;
+    double defense;
     int row;
     int col;
     char originalChar;
 
 public:
-    Character(int, int, int, int, int, char origin = '.');
+    Character(double, double, double, int, int, char origin = '.');
     virtual ~Character() { }
-    int getHP();
-    int getAtk();
-    int getDF();
+    double getHP();
+    double getAtk();
+    double getDF();
     int getRow();
     int getCol();
     char getOrigin();
     void moveRow(int);
     void moveCol(int);
-    void addAtk(int);
-    void addDF(int);
-    void addHP(int);
+    void addAtk(double);
+    void addDF(double);
+    void addHP(double);
     void setRow(int);
     void setCol(int);
     void setOrigin(char);

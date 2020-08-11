@@ -1,21 +1,21 @@
 #include "character.h"
-#include "treasure/shoard.h"
+#include "treasure/sHoard.h"
 #include "treasure/gold.h"
 #include "treasure/mHoard.h"
 #include "treasure/dHoard.h"
 
-Character::Character(int h, int atk, int def, int row, int col, char c):
+Character::Character(double h, double atk, double def, int row, int col, char c):
     health{h}, attack{atk}, defense{def}, row{row}, col{col}, originalChar{c}{ }
 
-int Character::getHP(){
+double Character::getHP(){
     return health;
 }
 
-int Character::getAtk(){
+double Character::getAtk(){
     return attack;
 }
 
-int Character::getDF(){
+double Character::getDF(){
     return defense;
 }
 
@@ -40,15 +40,15 @@ void Character::moveCol(int c){
     col += c;
 }
 
-void Character::addHP(int h){
+void Character::addHP(double h){
     health += h;
 }
 
-void Character::addAtk(int atk){
+void Character::addAtk(double atk){
     attack += atk;
 }
 
-void Character::addDF(int def){
+void Character::addDF(double def){
     defense += def;
 }
 

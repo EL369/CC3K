@@ -3,6 +3,11 @@
 #include "enemy.h"
 #include "enemy/human.h"
 #include "enemy/dwarf.h"
+#include "enemy/elf.h"
+#include "enemy/halfling.h"
+#include "enemy/dragon.h"
+#include "enemy/merchant.h"
+#include "enemy/orcs.h"
 
 #include "potion.h"
 
@@ -18,6 +23,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iomanip>
+#include <algorithm>
+
 
 Floor::Floor(std::vector<std::vector<char>> grid, int id):grid{grid},id{id}{
 }
@@ -133,7 +140,7 @@ void Floor::generateStair(){
 
 void Floor::generateAll(std::shared_ptr<Player> p){
     generateChambers();
-    p = std::make_shared<Shade>();
+    // p = std::make_shared<Shade>();
     generatePlayer(p);
     generateStair();
     // generate 10 rand potions
@@ -150,24 +157,51 @@ void Floor::generateAll(std::shared_ptr<Player> p){
         std::srand(time(NULL));
         int type = rand() % 8;
         std::shared_ptr<Treasure> t;
+        std::shared_ptr<Dragon> d;
         if(type < 5){
             t = std::make_shared<Gold>();
-        // }else if (type == 7){
+        }
+        // else if (type == 5){
         //     t = std::make_shared<Dhoard>();
-        }else{
+        //     d = std::make_shared<Dragon>();
+        //     d->setDhoard(t);
+        //     generateEnemy(d);
+        //     enemies.emplace_back(d);
+        // }
+        else{
             t = std::make_shared<Shoard>();
         }
         generateTreasure(t);
         treasures.emplace_back(t);
     }
     for(int i=0; i<20; ++i){
+        concreteType t{'H'};
         std::shared_ptr<Enemy> e;
         std::srand(time(NULL));
         int type = rand() % 18;
         if(type < 4){
-            e = std::make_shared<Human>();
-        }else{
-            e = std::make_shared<Dwarf>();
+            t.setType('H');
+            e = t.getEnemy();
+        }
+        else if (type < 7){
+            t.setType('W');
+            e = t.getEnemy();
+        }
+        else if (type < 12){
+            t.setType('L');
+            e = t.getEnemy();
+        }
+        else if (type < 14){
+            t.setType('E');
+            e = t.getEnemy();
+        }
+        else if (type < 16){
+            t.setType('O');
+            e = t.getEnemy();
+        }
+        else{
+            t.setType('M');
+            e = t.getEnemy();
         }
         generateEnemy(e);
         enemies.emplace_back(e);
@@ -256,6 +290,46 @@ void Floor::enemyAttackMove(){
     }
 }
 
+void Floor::EnemymoveHelper(int at){
+    std::vector<int> pos;
+    int acc = 0;
+    int erow = enemies[at]->getRow();
+    int ecol = enemies[at]->getCol();
+    for(int i = erow-1; i <= erow+1; i++){
+        for(int j = ecol-1; j <= ecol+1; j++){
+            if (grid[i][j] == '.'){
+                acc += 1;
+                pos.emplace_back(i);
+                pos.emplace_back(j);
+            }
+        }
+    }
+    int k = rand() % acc;
+    k *= 2;
+    int y = pos[k];
+    int x = pos[k+1];
+    enemies[at]->setRow(y);
+    enemies[at]->setCol(x);
+    grid[y][x] = enemies[at]->getType();
+    grid[erow][ecol] = '.';
+}
+
+void Floor::Enemymove(){
+    std::vector<int> track;
+    for(int y = 0; y < 25; y++){
+        for (int x = 0; x < 79; x++){
+            if (isRegularEnemy(y,x) || grid[y][x] == 'H' || grid[y][x] == 'M'){
+                int at = enemyAt(y, x);
+                std::vector<int>::iterator it = std::find(track.begin(), track.end(), at);
+                if (it == track.end()){
+                    track.emplace_back(at);
+                    EnemymoveHelper(at);
+                }
+            }
+        }
+    }
+}
+
 std::vector<int> Floor::nextMove(std::string str){
     std::vector<int> pos;
     int row = player->getRow();
@@ -301,7 +375,7 @@ void Floor::playerAttack(std::string str){
         int at = enemyAt(y, x);
         player->attackEnemy(enemies[at]);
         // if the enemy that player attack is a merchant, all merchants are set to be hostile.  
-        if (grid[y][x] == 'H'){
+        if (grid[y][x] == 'M'){
             int s = enemies.size();
             for(int i = 0; i < s; i++){
                 if (enemies[i]->getType() == 'M'){
@@ -311,12 +385,6 @@ void Floor::playerAttack(std::string str){
         }
         if(enemies[at]->getHP() <= 0){
             action = enemies[at]->getType() + " is killed";
-            // int size = enemies.size();
-            // size -= 1;
-            // for (int j = at; j < size; j++){
-            //     enemies[j] = enemies[j+1];
-            // }
-            // enemies.resize(size);
             enemies.erase(enemies.begin()+at);
             if (isRegularEnemy(y,x)){
                 std::srand(time(NULL));
@@ -353,16 +421,14 @@ void Floor::playerAttack(std::string str){
                 }
                 action = "Two normal piles of gold is dropped";// << std::endl;
             }
-            /*
             else if (grid[y][x] == 'M'){
                 auto merchantH = std::make_shared<Mhoard>();
                 treasures.emplace_back(merchantH);
                 grid[y][x] = '8';
             }
-            else{
-                grid[y][x] = '.';
-            }
-            */
+            // else{
+            //     grid[y][x] = '.';
+            // }
         }
     }
 }
@@ -421,16 +487,10 @@ void Floor::playerUsePotion(std::string str){
         player->usePotion(potions[at]);
         std::string temp = std::to_string(potions[at]->getType());
         action = "Player used potion " + temp;
-        // int size = potions.size();
-        // size -= 1;
-        // for (int j = at; j < size; j++){
-        //     potions[j] = potions[j+1];
-        // }
-        // potions.resize(size);
         potions.erase(potions.begin()+at);
-        grid[player->getRow()][player->getCol()] = '.';
-        player->move(str);
-        grid[y][x] = '@';
+        grid[y][x] = '.';
+        // player->move(str);
+        // grid[y][x] = '@';
     }
     else{
         action = "No potion in this direction";

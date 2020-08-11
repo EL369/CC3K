@@ -5,8 +5,10 @@
 #include <string>
 
 #include "floor.h"
-#include "player/shade.h"
+
 #include "player.h"
+#include "enemy.h"
+
 
 std::string defaultFile ="cc3kfloor.txt";
 
@@ -51,10 +53,20 @@ int main(int argc, char* argv[]) {
             player = std::make_shared<Shade>();
             break;
         }
-        //else if
-        else{
-            playerChar = 's';
-            player = std::make_shared<Shade>();
+        else if (playerChar == 'd'){
+            player = std::make_shared<Drow>();
+            break;
+        }
+        else if (playerChar == 'v'){
+            player = std::make_shared<Vampire>();
+            break;
+        }
+        else if (playerChar == 't'){
+            player = std::make_shared<Troll>();
+            break;
+        }
+        else if (playerChar == 'g'){
+            player = std::make_shared<Goblin>();
             break;
         }
     }
@@ -62,7 +74,9 @@ int main(int argc, char* argv[]) {
     std::cout<<"Generating the floor..."<<std::endl;
     (floors[0])->generateAll(player);
     std::string cmd, arg;
+    bool enemyMoving = true;
     while (std::cin>>cmd){
+        std::cout << "--------New Round--------" << std::endl;
         if(cmd == "no" || cmd== "so" || cmd == "ea" || cmd == "we" || cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw"){
             (floors[0])->playerMove(cmd);
         }else if (cmd == "u"){
@@ -71,8 +85,20 @@ int main(int argc, char* argv[]) {
         }else if (cmd == "a"){
             std::cin>>arg;
             (floors[0])->playerAttack(arg);
+        }else if (cmd == "f"){
+            enemyMoving = !enemyMoving;
+        }else if (cmd == "q"){
+            break;
         }else{
             std::cout<<"invald command"<<std::endl;
-        }floors[0]->print();
+        }
+        floors[0]->enemyAttackMove();
+        if (enemyMoving == true){
+            floors[0]->Enemymove();
+        }
+        floors[0]->print();
+        if (player->getAlive() == false){
+            break;
+        }
     }
 }

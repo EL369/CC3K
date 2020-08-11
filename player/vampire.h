@@ -1,14 +1,14 @@
-#ifndef _SHADE_h_
-#define _SHADE_h_
+#ifndef _VAMPIRE_h_
+#define _VAMPIRE_h_
 
 #include "../player.h"
 #include "../enemy.h"
 
 class Enemy;
 
-class Shade: public Player{
+class Vampire: public Player{
     public:
-    Shade();
+    Vampire();
     void accept(Enemy &) override;
     void attackEnemy(std::shared_ptr <Enemy>) override;
 };
