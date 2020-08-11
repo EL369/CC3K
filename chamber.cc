@@ -70,15 +70,6 @@ std::vector<int> Chamber::generateCharRand(char c){
     return pos;
 }
 
-void Chamber::erase(int x, int y){
-    if(grid[y][x]!='-' && grid[y][x]!='|' && grid[y][x]!='+' && grid[y][x]!='#'){
-        grid[y][x] = '.';
-    }
-}
-char Chamber::getPos(int x, int y){
-    return grid[y][x];
-}
-
 bool Chamber::inChamber(std::shared_ptr<Character> c){
     int row = c->getRow();
     int col = c->getCol();

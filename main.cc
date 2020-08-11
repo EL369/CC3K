@@ -44,61 +44,86 @@ int main(int argc, char* argv[]) {
             row = 0;
         }
     }
-    std::cout<<"Please choose your character: \ns for shade(defualt), d for drow, v for vampire, t for troll, g for goblin"<<std::endl;
-    char playerChar;
-    std::shared_ptr<Player> player;
-    while (true){
-        std::cin>>playerChar;
-        if(playerChar == 's'){
-            player = std::make_shared<Shade>();
-            break;
+    bool restart= true;
+    while (restart){
+        restart = false;
+        std::cout<<"Please choose your character: \ns for shade(defualt), d for drow, v for vampire, t for troll, g for goblin"<<std::endl;
+        char playerChar;
+        std::shared_ptr<Player> player;
+        while (true){
+            std::cin>>playerChar;
+            if (playerChar == 'd'){
+                player = std::make_shared<Drow>();
+                break;
+            }
+            else if (playerChar == 'v'){
+                player = std::make_shared<Vampire>();
+                break;
+            }
+            else if (playerChar == 't'){
+                player = std::make_shared<Troll>();
+                break;
+            }
+            else if (playerChar == 'g'){
+                player = std::make_shared<Goblin>();
+                break;
+            }
+            else{
+                player = std::make_shared<Shade>();
+                break;
+            }
         }
-        else if (playerChar == 'd'){
-            player = std::make_shared<Drow>();
-            break;
-        }
-        else if (playerChar == 'v'){
-            player = std::make_shared<Vampire>();
-            break;
-        }
-        else if (playerChar == 't'){
-            player = std::make_shared<Troll>();
-            break;
-        }
-        else if (playerChar == 'g'){
-            player = std::make_shared<Goblin>();
-            break;
-        }
-    }
-    std::cout<<"Your character is: "<<playerChar<<std::endl;
-    std::cout<<"Generating the floor..."<<std::endl;
-    (floors[0])->generateAll(player);
-    std::string cmd, arg;
-    bool enemyMoving = true;
-    while (std::cin>>cmd){
-        std::cout << "--------New Round--------" << std::endl;
-        if(cmd == "no" || cmd== "so" || cmd == "ea" || cmd == "we" || cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw"){
-            (floors[0])->playerMove(cmd);
-        }else if (cmd == "u"){
-            std::cin>>arg;
-            (floors[0])->playerUsePotion(arg);
-        }else if (cmd == "a"){
-            std::cin>>arg;
-            (floors[0])->playerAttack(arg);
-        }else if (cmd == "f"){
-            enemyMoving = !enemyMoving;
-        }else if (cmd == "q"){
-            break;
-        }else{
-            std::cout<<"invald command"<<std::endl;
-        }
-        floors[0]->enemyAttackPlayer();
-        if (enemyMoving == true){
-            floors[0]->Enemymove();
-        }
-        floors[0]->print();
-        if (player->getAlive() == false){
-            break;
+        bool exit = false;
+        std::cout<<"Your character is: "<<playerChar<<std::endl;
+        std::cout<<"Generating the floor..."<<std::endl;
+        for(int i=0; i<5; ++i){
+            std::cout << "--------Level "<< std::to_string(i+1)<<"--------" << std::endl;
+            (floors[i])->generateAll(player);
+            std::string cmd, arg;
+            bool enemyMoving = true;
+            while (std::cin>>cmd){
+                if(cmd == "no" || cmd== "so" || cmd == "ea" || cmd == "we" || cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw"){
+                    (floors[i])->playerMove(cmd);
+                }
+                else if (cmd == "u"){
+                    std::cin>>arg;
+                    (floors[i])->playerUsePotion(arg);
+                }
+                else if (cmd == "a"){
+                    std::cin>>arg;
+                    (floors[i])->playerAttack(arg);
+                }
+                else if (cmd == "f"){
+                    enemyMoving = !enemyMoving;
+                }
+                else if (cmd == "q"){
+                    exit = true;
+                    break;
+                }
+                else if (cmd == "r"){
+                    restart = true;
+                    exit = true;
+                    std::cout << "Restarts the game" << std::endl;
+                    break;
+                }
+                else{
+                    floors[i]->setAction("Invalid command");
+                }
+                floors[i]->enemyAttackPlayer();
+                if (enemyMoving == true){
+                    floors[i]->Enemymove();
+                }
+                floors[i]->print();
+                if (player->getAlive() == false){
+                    exit = true;
+                    break;
+                }
+                if(floors[i]->getReachStair()){
+                    std::cout<< "Player reached the stair, entering the next level..."<<std::endl;
+                    break;
+                }
+            }
+            if(exit) break;
         }
     }
 }

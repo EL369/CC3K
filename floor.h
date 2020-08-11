@@ -21,6 +21,7 @@ private:
     std::vector<std::shared_ptr<Treasure>> treasures;
     std::vector<std::shared_ptr<Chamber>> chambers;
     std::vector<std::vector<char>> grid;
+    bool reachStair;
     int id;
     std::string action = "Player enters the floor";
 
@@ -35,6 +36,9 @@ public:
     std::vector<std::shared_ptr<Treasure>> getTreasures();
     std::vector<std::shared_ptr<Chamber>> getChambers();
     int getId();
+    bool getReachStair();
+
+    void setAction(std::string s);
 
     void print();
 
@@ -47,17 +51,6 @@ public:
     void generateTreasure(std::shared_ptr<Treasure>);
     void generateEnemy(std::shared_ptr<Enemy>);
     void generateStair();
-
-    void erase(std::shared_ptr<Character>);
-    void erase(std::shared_ptr<Potion>);
-    void erase(std::shared_ptr<Treasure>);
-
-    void move(std::shared_ptr<Character>, int, int, int, int);
-    // void move(std::shared_ptr<Item>, int, int);
-
-    // std::vector<int> getPos(int, int);
-
-    // std::vector<int> existNear(char, int, int);
 
     void EnemymoveHelper(int);
     void Enemymove();

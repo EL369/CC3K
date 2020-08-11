@@ -26,14 +26,8 @@ public:
     //Generates the char in random position within range of this Chamber, returns the position
     std::vector<int> generateCharRand(char); 
 
-    void erase(int, int);
-
     bool validPos(int, int);
-
-    // void add(int, int, char);
-
-    char getPos (int, int);
-    
+   
     bool inChamber(std::shared_ptr<Character>);
     bool inChamber(std::shared_ptr<Item>);
 
