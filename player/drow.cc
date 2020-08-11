@@ -1,6 +1,8 @@
 #include "drow.h"
 #include <cstdlib>
 #include <cmath>
+#include <stdlib.h>
+#include <time.h>
 
 
 Drow::Drow(): 
