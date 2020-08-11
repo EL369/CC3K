@@ -161,18 +161,39 @@ void Floor::generateAll(std::shared_ptr<Player> p){
         if(type < 5){
             t = std::make_shared<Gold>();
         }
-        // else if (type == 5){
-        //     t = std::make_shared<Dhoard>();
-        //     d = std::make_shared<Dragon>();
-        //     d->setDhoard(t);
-        //     generateEnemy(d);
-        //     enemies.emplace_back(d);
-        // }
+        else if (type <= 5){
+            std::shared_ptr<Dhoard> hoard;
+            hoard = std::make_shared<Dhoard>();
+            d = std::make_shared<Dragon>();
+            d->setDhoard(hoard);
+            enemies.emplace_back(d);
+            generateTreasure(hoard);
+            int pos = treasures.size();
+            int y = treasures[pos-1]->getRow();
+            int x = treasures[pos-1]->getCol();
+            int acc = 0;
+            for (int i = y-1; i <= y+1; i++){
+                if (acc == 1){
+                    break;
+                }
+                for (int j = x-1; j <= x+1; j++){
+                    if (grid[i][j] == '.'){
+                        d->setRow(i);
+                        d->setCol(j);
+                        grid[i][j] = 'D';
+                        acc++;
+                        break;
+                    }
+                }
+            }
+            // treasures.emplace_back(hoard);
+            continue;
+        }
         else{
             t = std::make_shared<Shoard>();
         }
         generateTreasure(t);
-        treasures.emplace_back(t);
+        // treasures.emplace_back(t);
     }
     for(int i=0; i<20; ++i){
         concreteType t{'H'};
@@ -204,7 +225,7 @@ void Floor::generateAll(std::shared_ptr<Player> p){
             e = t.getEnemy();
         }
         generateEnemy(e);
-        enemies.emplace_back(e);
+        // enemies.emplace_back(e);
     }
     print();
 }
@@ -268,20 +289,43 @@ int Floor::enemyAt(int row, int col){
 void Floor::enemyAttackMove(){
     int prow = player->getRow();
     int pcol = player->getCol();
+    int acc = -1;
     for (int y = prow-1; y <= prow+1; y++){
         for (int x = pcol-1; x <= pcol+1; x++){
-            if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M'){
+            if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M' || grid[y][x] == 'D'){
                 int at = enemyAt(y, x);
+                if (at == acc){
+                    break;
+                }
                 if (enemies[at]->getHostile() == true){
                     player->accept(*enemies[at]);
                     action = "Enemy attacked player";
+                    acc = at;
                 }
             }
-            /*
-            else if (grid[y][x] == 'D'){
-
+            else if (grid[y][x] == 'G'){
+                int at = treasureAt(y, x);
+                if (treasures[at]->getType() == 9){
+                    int size = enemies.size();
+                    for(int i = 0; i < size; i++){
+                        if (i == acc){
+                            break;
+                        }
+                        std::shared_ptr<Dragon> dragon;
+                        if (enemies[i]->getType() == 'D'){
+                            dragon = std::dynamic_pointer_cast<Dragon> (enemies[i]);
+                        }
+                        else{
+                            continue;
+                        }
+                        if (dragon->getDhoard() == treasures[at]){
+                            player->accept(*enemies[i]);
+                            acc = i;
+                            break;
+                        }
+                    }
+                }
             }
-            */
         }
     }
     if (player->getHP() <= 0){
@@ -384,8 +428,10 @@ void Floor::playerAttack(std::string str){
             }
         }
         if(enemies[at]->getHP() <= 0){
-            action = enemies[at]->getType() + " is killed";
-            enemies.erase(enemies.begin()+at);
+            std::string s;
+            char c = enemies[at]->getType();
+            s.push_back(c);
+            std::cout << "  " << s + " is killed!!" << std::endl;
             if (isRegularEnemy(y,x)){
                 std::srand(time(NULL));
                 int i = rand() % 2;
@@ -413,6 +459,8 @@ void Floor::playerAttack(std::string str){
                         if (grid[i][j] == '.'){
                             grid[i][j] = 'G';
                             auto normal = std::make_shared<Gold>();
+                            normal->setRow(i);
+                            normal->setCol(j);
                             treasures.emplace_back(normal);
                             acc += 1;
                             break;
@@ -423,12 +471,19 @@ void Floor::playerAttack(std::string str){
             }
             else if (grid[y][x] == 'M'){
                 auto merchantH = std::make_shared<Mhoard>();
+                grid[y][x] = 'G';
+                merchantH->setRow(y);
+                merchantH->setCol(x);
                 treasures.emplace_back(merchantH);
-                grid[y][x] = '8';
+                std::cout << "  Merchant Hoard is dropped!" << std::endl;
             }
-            // else{
-            //     grid[y][x] = '.';
-            // }
+            else{
+                std::shared_ptr<Dragon> dragon = std::dynamic_pointer_cast<Dragon> (enemies[at]);
+                grid[y][x] = '.';
+                dragon->getDhoard()->setPick(true);
+                std::cout << "  Dragon Hoard can be picked now!";
+            }
+            enemies.erase(enemies.begin()+at);
         }
     }
 }
@@ -449,7 +504,7 @@ void Floor::playerMove(std::string str){
     }
     else if (grid[y][x] == 'G'){
         int at = treasureAt(y, x);
-        if (treasures[at]->getPick() == false){
+        if (treasures[at]->getPick() == true){
             int amt = treasures[at]->getAmt();
             player->addGold(amt);
             action= "Player picked up "+std::to_string(amt);
@@ -489,8 +544,6 @@ void Floor::playerUsePotion(std::string str){
         action = "Player used potion " + temp;
         potions.erase(potions.begin()+at);
         grid[y][x] = '.';
-        // player->move(str);
-        // grid[y][x] = '@';
     }
     else{
         action = "No potion in this direction";

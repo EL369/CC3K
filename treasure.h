@@ -12,7 +12,7 @@ class Treasure: public Item{
     int type; //6 - normal gold pile, 7 - small hoard, 8 - merchant hoard, 9 - dragon hoard
 
     public:
-    Treasure(int, int, int, int);
+    Treasure(int, int, int, bool, int);
     ~Treasure() { }
     int getAmt();
     bool getPick();

@@ -11,6 +11,7 @@
 #include "player/vampire.h"
 #include "player/troll.h"
 #include "player/goblin.h"
+#include "treasure/dHoard.h"
 
 // #include "enemy/dwarf.h"
 

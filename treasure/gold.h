@@ -5,7 +5,7 @@
 
 class Gold: public Treasure{
     public:
-    Gold(): Treasure{0, 0, 2, 6} { }
+    Gold(): Treasure{0, 0, 2, true, 6} { }
 };
 
 #endif

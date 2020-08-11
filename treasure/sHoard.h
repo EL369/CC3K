@@ -5,7 +5,7 @@
 
 class Shoard: public Treasure{
     public:
-    Shoard(): Treasure{0, 0, 1, 7} { }
+    Shoard(): Treasure{0, 0, 1, true, 7} { }
 };
 
 #endif

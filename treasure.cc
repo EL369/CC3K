@@ -1,7 +1,7 @@
 #include "treasure.h"
 
-Treasure::Treasure(int row, int col, int amt, int type):
-    Item{row, col}, amount{amt}, pick{false}, type{type} {}
+Treasure::Treasure(int row, int col, int amt, bool pick, int type):
+    Item{row, col}, amount{amt}, pick{pick}, type{type} {}
 
 int Treasure::getAmt(){
     return amount;
