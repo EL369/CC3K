@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
         for(int i=0; i<5; ++i){
             std::cout << "--------Level "<< std::to_string(i+1)<<"--------" << std::endl;
             (floors[i])->generateAll(player);
+            floors[i]->getPlayer()->removeTempPotion();
             std::string cmd, arg;
             bool enemyMoving = true;
             while (std::cin>>cmd){
@@ -103,6 +104,7 @@ int main(int argc, char* argv[]) {
                 else if (cmd == "r"){
                     restart = true;
                     exit = true;
+                    floors[i]->getPlayer()->removeTempPotion();
                     std::cout << "Restarts the game" << std::endl;
                     break;
                 }
@@ -120,6 +122,7 @@ int main(int argc, char* argv[]) {
                 }
                 if(floors[i]->getReachStair()){
                     std::cout<< "Player reached the stair, entering the next level..."<<std::endl;
+                    floors[i]->getPlayer()->removeTempPotion();
                     break;
                 }
             }

@@ -356,6 +356,11 @@ void Floor::Enemymove(){
     for(int y = 0; y < 25; y++){
         for (int x = 0; x < 79; x++){
             if (isRegularEnemy(y,x) || grid[y][x] == 'H' || grid[y][x] == 'M'){
+                int prow = player->getRow();
+                int pcol = player->getCol();
+                if (y >= prow-1 && y <= prow + 1 && x >= pcol-1 && x <= pcol + 1){
+                    break;
+                }
                 int at = enemyAt(y, x);
                 std::vector<int>::iterator it = std::find(track.begin(), track.end(), at);
                 if (it == track.end()){
@@ -530,7 +535,7 @@ void Floor::playerUsePotion(std::string str){
     int x = pos[1];
     if (grid[y][x] == 'P'){
         int at = potionAt(y, x);
-        if (potions[at]->getType() != '0' && potions[at]->getType() != '3'){
+        if (potions[at]->getType() != '0' || potions[at]->getType() != '3'){
             player->addPotion(potions[at]);
         }
         player->usePotion(potions[at]);

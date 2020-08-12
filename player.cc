@@ -2,7 +2,7 @@
 #include "enemy.h"
 
 Player::Player(double h, double atk, double def, int row, int col, int floor, int chamber, int maxHP, std::string type):
-    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0}, alive{true}, type{type} { }
+    Character{h, atk, def, row, col}, floorID{floor}, chamberID{chamber}, maxHP{maxHP}, gold{0}, alive{true}, type{type} {}
 
 Player::~Player(){}
 
@@ -17,6 +17,7 @@ void Player::setType(std::string s){
 bool Player::getAlive(){
     return alive;
 }
+
 void Player::usePotion(std::shared_ptr<Potion> potion){
     int type = potion->getType();
     if (type == 0){
@@ -132,6 +133,9 @@ void Player::addPotion(std::shared_ptr<Potion> potion){
 }
 
 void Player::removeTempPotion(){
+    if (tempPotion.empty()){
+        return;
+    }
     int size = tempPotion.size();
     for(int i = 0; i < size; i++){
         if (tempPotion[i]->getType() == 1){
@@ -157,4 +161,5 @@ void Player::removeTempPotion(){
             defense += 5;
         }
     }
+    tempPotion.clear();
 }
