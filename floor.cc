@@ -24,6 +24,7 @@
 #include <time.h>
 #include <iomanip>
 #include <algorithm>
+#include <vector>
 
 
 Floor::Floor(std::vector<std::vector<char>> grid, int id):grid{grid},id{id}{
@@ -292,7 +293,7 @@ void Floor::enemyAttackPlayer(){
                 }
                 if (enemies[at]->getHostile() == true){
                     player->accept(*enemies[at]);
-                    action += "Enemy attacked player";
+                    action += "Enemy attacked player. ";
                     acc = at;
                 }
             }
@@ -416,7 +417,7 @@ void Floor::playerAttack(std::string str){
     if (isRegularEnemy(y, x) || grid[y][x] == 'H' || grid[y][x] == 'M' || grid[y][x] == 'D'){
         int at = enemyAt(y, x);
         player->attackEnemy(enemies[at]);
-        action += "Player attacked an enemy";
+        action += "Player attacked an enemy. ";
         // if the enemy that player attack is a merchant, all merchants are set to be hostile.  
         if (grid[y][x] == 'M'){
             int s = enemies.size();
@@ -430,7 +431,7 @@ void Floor::playerAttack(std::string str){
             std::string s;
             char c = enemies[at]->getType();
             s.push_back(c);
-            action += "  " + s + " is killed!!";
+            action += "  " + s + " is killed!! ";
             if (isRegularEnemy(y,x)){
                 std::srand(time(NULL));
                 int i = rand() % 2;
@@ -489,6 +490,37 @@ void Floor::playerAttack(std::string str){
     }
 }
 
+void Floor::clearFloor(){
+    for (int i = 0; i < enemies.size(); i++){
+        int x = enemies[0]->getCol();
+        int y = enemies[0]->getRow();
+        grid[y][x] = '.';
+        enemies.erase(enemies.begin());
+    }
+    enemies.clear();
+    for (int i = 0; i < treasures.size(); i++){
+        int x = treasures[0]->getCol();
+        int y = treasures[0]->getRow();
+        grid[y][x] = '.';
+        treasures.erase(treasures.begin());
+    }
+    treasures.clear();
+    for (int i = 0; i < potions.size(); i++){
+        int x = potions[0]->getCol();
+        int y = potions[0]->getRow();
+        grid[y][x] = '.';
+        potions.erase(potions.begin());
+    }
+    potions.clear();
+    for (int i = 0; i < chambers.size(); i++){
+        chambers.erase(chambers.begin());
+    }
+    chambers.clear();
+    int x = player->getCol();
+    int y = player->getRow();
+    grid[y][x] = '.';
+}
+
 
 void Floor::playerMove(std::string str){
     std::vector<int> pos = nextMove(str);
@@ -501,7 +533,7 @@ void Floor::playerMove(std::string str){
         grid[r][c] = player->getOrigin();
         player->setOrigin(grid[y][x]);
         grid[y][x] = '@';
-        action += "Player moved in "+str+" direction";
+        action += "Player moved in "+str+" direction. ";
     }
     else if(grid[y][x] == '\\'){
         reachStair = true;
@@ -513,7 +545,7 @@ void Floor::playerMove(std::string str){
             int amt = treasures[at]->getAmt();
             player->addGold(amt);
             action= "Player picked up "+std::to_string(amt);
-            action +=" gold";
+            action +=" gold. ";
             player->move(str);
             grid[r][c] = player->getOrigin();
             player->setOrigin('.');
@@ -521,7 +553,7 @@ void Floor::playerMove(std::string str){
             treasures.erase(treasures.begin()+at);
         }
         else{
-            action += "Treasure cannot be picked";
+            action += "Treasure cannot be picked. ";
         }
     }
     else{
@@ -570,7 +602,7 @@ void Floor::playerUsePotion(std::string str){
         grid[y][x] = '.';
     }
     else{
-        action += "No potion in this direction";
+        action += "No potion in this direction. ";
     }
 }
 

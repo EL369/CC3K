@@ -52,6 +52,7 @@ public:
     void generateEnemy(std::shared_ptr<Enemy>);
     void generateStair();
 
+    void clearFloor();
     void EnemymoveHelper(int);
     void Enemymove();
 

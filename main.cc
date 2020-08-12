@@ -106,6 +106,7 @@ int main(int argc, char* argv[]) {
                     exit = true;
                     floors[i]->getPlayer()->removeTempPotion();
                     std::cout << "Restarts the game" << std::endl;
+                    floors[i]->clearFloor();
                     break;
                 }
                 else{
