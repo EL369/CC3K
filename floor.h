@@ -66,6 +66,8 @@ public:
     void playerAttack(std::string);
     void playerMove(std::string);
     void playerUsePotion(std::string);
+
+    void printScore();
 };
 
 #endif

@@ -28,9 +28,6 @@ public:
 
     bool validPos(int, int);
    
-    bool inChamber(std::shared_ptr<Character>);
-    bool inChamber(std::shared_ptr<Item>);
-
 };
 
 #endif

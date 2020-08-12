@@ -70,14 +70,16 @@ int main(int argc, char* argv[]) {
             }
             else{
                 player = std::make_shared<Shade>();
+                playerChar = 's';
                 break;
             }
         }
         bool exit = false;
         std::cout<<"Your character is: "<<playerChar<<std::endl;
-        std::cout<<"Generating the floor..."<<std::endl;
         for(int i=0; i<5; ++i){
-            std::cout << "--------Level "<< std::to_string(i+1)<<"--------" << std::endl;
+            int i = 4;
+            std::cout << "------------------ Level "<< std::to_string(i+1)<<" ------------------" << std::endl;
+            std::cout<<"Generating the floor..."<<std::endl;
             (floors[i])->generateAll(player);
             floors[i]->getPlayer()->removeTempPotion();
             std::string cmd, arg;
@@ -106,11 +108,13 @@ int main(int argc, char* argv[]) {
                     exit = true;
                     floors[i]->getPlayer()->removeTempPotion();
                     std::cout << "Restarts the game" << std::endl;
-                    floors[i]->clearFloor();
+                    for(int j = 0; j<=i; ++j){
+                        floors[j]->clearFloor();
+                    }
                     break;
                 }
                 else{
-                    floors[i]->setAction("Invalid command");
+                    floors[i]->setAction("Invalid command. ");
                 }
                 floors[i]->enemyAttackPlayer();
                 if (enemyMoving == true){
@@ -122,8 +126,13 @@ int main(int argc, char* argv[]) {
                     break;
                 }
                 if(floors[i]->getReachStair()){
-                    std::cout<< "Player reached the stair, entering the next level..."<<std::endl;
-                    floors[i]->getPlayer()->removeTempPotion();
+                    if(i==4){
+                        floors[i]->printScore();
+                    }
+                    else{
+                        std::cout<< "Player reached the stair, entering the next level..."<<std::endl;
+                        floors[i]->getPlayer()->removeTempPotion();
+                    }
                     break;
                 }
             }

@@ -69,22 +69,3 @@ std::vector<int> Chamber::generateCharRand(char c){
     // std::cout<<pos[0]<<" "<<pos[1]<<std::endl;
     return pos;
 }
-
-bool Chamber::inChamber(std::shared_ptr<Character> c){
-    int row = c->getRow();
-    int col = c->getCol();
-    if(row >= topLeftX && col >= topLeftY && row < topLeftX+width && col < topLeftY+height){
-        return true;
-    }return false;
-}
-
-bool Chamber::inChamber(std::shared_ptr<Item> i){
-    int row = i->getRow();
-    int col = i->getCol();
-    if(id == 1){
-        if(col >= topLeftX && row >= 7 && col <= 60) return false;
-    }
-    if(col >= topLeftX && row >= topLeftY && col < topLeftX+width && row < topLeftY+height){
-        return true;
-    }return false;
-}
