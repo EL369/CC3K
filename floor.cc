@@ -30,6 +30,8 @@
 Floor::Floor(std::vector<std::vector<char>> grid, int id):grid{grid},id{id}{
 }
 
+Floor::Floor(int id):id{id}{
+}
 
 void Floor::print(){
     for (int i = 0; i < 25; ++i) {
@@ -86,10 +88,8 @@ void Floor::generateChambers(){
 }
 
 void Floor::generatePlayer(std::shared_ptr<Player> p){
-    // std::cout<<"generate player"<<std::endl;
     std::srand(time(NULL));
     int i = rand() % 5;
-    // std::cout<<"chamber "<<i<<std::endl;
     std::vector<int> position = (chambers[i])->generateCharRand('@');
     p->setChamber(i);
     p->setRow(position[1]);
@@ -101,9 +101,7 @@ void Floor::generatePlayer(std::shared_ptr<Player> p){
 void Floor::generatePotion(std::shared_ptr<Potion> p){
     std::srand(time(NULL));
     int i = rand() % 5;
-    // std::cout<<"generate potion: "<<c<<std::endl;
     std::vector<int> position = (chambers[i])->generateCharRand('P');
-    // p->setChamber(i);
     p->setRow(position[1]);
     p->setCol(position[0]);
     potions.emplace_back(p);
@@ -113,9 +111,7 @@ void Floor::generatePotion(std::shared_ptr<Potion> p){
 void Floor::generateTreasure(std::shared_ptr<Treasure> t){
      std::srand(time(NULL));
      int i = rand() % 5;
-    // std::cout<<"generate treasure: " << c<<std::endl;
      std::vector<int> position = (chambers[i])->generateCharRand('G');
-     // t->setChamber(i);
      t->setRow(position[1]);
      t->setCol(position[0]);
      treasures.emplace_back(t);
@@ -126,7 +122,6 @@ void Floor::generateEnemy(std::shared_ptr<Enemy> e){
     std::srand(time(NULL));
     int i = rand() % 5;
     std::vector<int> position = (chambers[i])->generateCharRand(e->getType());
-    // e->setChamber(i);
     e->setRow(position[1]);
     e->setCol(position[0]);
     enemies.emplace_back(e);
@@ -152,7 +147,7 @@ void Floor::generateAll(std::shared_ptr<Player> p){
     for(int i=0; i<10; ++i){
         std::srand(time(NULL));
         int type = rand() % 6;
-        std::shared_ptr<Potion> potion = std::make_shared<Potion>(0, 0, 0, type);
+        std::shared_ptr<Potion> potion = std::make_shared<Potion>(0, 0, type);
         generatePotion(potion);
     }
     // gold: 5/8 chance of normal, 1/8 dragon hoard, 2/8 small hoard
@@ -190,14 +185,12 @@ void Floor::generateAll(std::shared_ptr<Player> p){
                     }
                 }
             }
-            // treasures.emplace_back(hoard);
             continue;
         }
         else{
             t = std::make_shared<Shoard>();
         }
         generateTreasure(t);
-        // treasures.emplace_back(t);
     }
     for(int i=0; i<20; ++i){
         concreteType t{'H'};
@@ -229,9 +222,7 @@ void Floor::generateAll(std::shared_ptr<Player> p){
             e = t.getEnemy();
         }
         generateEnemy(e);
-        // enemies.emplace_back(e);
     }
-    print();
 }
 
 int Floor::treasureAt(int row, int col){
@@ -624,3 +615,83 @@ void Floor::printScore(){
     std::cout<<"Congratulations, you won! Your score is "<<gold<<std::endl;
 }
 
+void Floor::readFromFile(std::shared_ptr<Player> p){
+    player = p;
+    for(int row = 0; row<25; ++row){
+        for(int col = 0; col<79; ++col){
+            if(grid[row][col]=='@'){
+                player->setRow(row);
+                player->setCol(col);
+                player->setOrigin('.');
+            }else if(grid[row][col]=='M'){
+                std::shared_ptr<Merchant> e = std::make_shared<Merchant>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='O'){
+                std::shared_ptr<Orcs> e = std::make_shared<Orcs>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='D'){
+                std::shared_ptr<Dragon> e = std::make_shared<Dragon>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                std::shared_ptr<Dhoard> t = std::make_shared<Dhoard>();
+                t->setRow(row);
+                t->setCol(col-1);
+                t->setOrigin('.');
+                e->setDhoard(t);
+                enemies.emplace_back(e);
+                treasures.emplace_back(t);
+                grid[row][col-1] = 'G';
+            }else if(grid[row][col]=='W'){
+                std::shared_ptr<Dwarf> e = std::make_shared<Dwarf>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='E'){
+                std::shared_ptr<Elf> e = std::make_shared<Elf>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='L'){
+                std::shared_ptr<Halfling> e = std::make_shared<Halfling>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='H'){
+                std::shared_ptr<Human> e = std::make_shared<Human>();
+                e->setRow(row);
+                e->setCol(col);
+                e->setOrigin('.');
+                enemies.emplace_back(e);
+            }else if(grid[row][col]=='6'){
+                std::shared_ptr<Gold> g = std::make_shared<Gold>();
+                g->setRow(row);
+                g->setCol(col);
+                g->setOrigin('.');
+                treasures.emplace_back(g);
+                grid[row][col]='G';
+            }else if(grid[row][col]=='7'){
+                grid[row][col]='G';
+                std::shared_ptr<Shoard> g = std::make_shared<Shoard>();
+                g->setRow(row);
+                g->setCol(col);
+                g->setOrigin('.');
+                treasures.emplace_back(g);
+            }else if(grid[row][col]=='0'||grid[row][col]=='1'||grid[row][col]=='2'||grid[row][col]=='3'||grid[row][col]=='4'||grid[row][col]=='5'){
+                int a = grid[row][col] - '0';
+                std::shared_ptr<Potion> p = std::make_shared<Potion>(row, col, a);
+                potions.emplace_back(p);
+                grid[row][col]='P';
+            }
+        }
+    }
+}
