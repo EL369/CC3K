@@ -45,6 +45,7 @@ int main(int argc, char* argv[]) {
         if(row==25){
             floors.emplace_back(std::make_shared<Floor>(grid, id));
             fileContent.emplace_back(grid);
+            grid.clear();
             ++id;
             row = 0;
         }
