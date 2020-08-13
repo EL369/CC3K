@@ -572,7 +572,7 @@ void Floor::playerUsePotion(std::string str){
     int x = pos[1];
     if (grid[y][x] == 'P'){
         int at = potionAt(y, x);
-        if (potions[at]->getType() != '0' || potions[at]->getType() != '3'){
+        if (potions[at]->getType() == 1 || potions[at]->getType() == 2 || potions[at]->getType() == 4 || potions[at]->getType() == 5){
             player->addPotion(potions[at]);
         }
         player->usePotion(potions[at]);
