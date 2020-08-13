@@ -27,6 +27,7 @@ private:
 
 public:
     Floor( std::vector<std::vector<char>> grid, int id);
+    Floor( int id);
 
     ~Floor(){}
 
@@ -68,6 +69,8 @@ public:
     void playerUsePotion(std::string);
 
     void printScore();
+
+    void readFromFile(std::shared_ptr<Player>);
 };
 
 #endif

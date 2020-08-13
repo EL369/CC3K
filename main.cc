@@ -10,18 +10,23 @@
 #include "enemy.h"
 
 
-std::string defaultFile ="cc3kfloor.txt";
+std::string fileName ="defaultfloor.txt";
 
 std::vector<std::shared_ptr<Floor>> floors;
 
+std::vector<std::vector<std::vector<char>>>fileContent;
+
+bool readFile = false;
+
 int main(int argc, char* argv[]) {
-    std::ifstream file(defaultFile);
     if (argc > 1) {
-        std::ifstream file(argv[1]);
-        if(!file.good()){
-            std::cout<<"File is invalid.";
-            exit(1);
-        }
+        fileName = argv[1];
+        readFile = true;
+    }
+    std::ifstream file(fileName);
+    if(!file.good()){
+        std::cout<<"File is invalid.";
+        exit(1);
     }
     std::vector<std::vector<char>> grid;
     std::string s;
@@ -39,7 +44,7 @@ int main(int argc, char* argv[]) {
         line.clear();
         if(row==25){
             floors.emplace_back(std::make_shared<Floor>(grid, id));
-            // std::cout<<"--id---"<<id<<std::endl;
+            fileContent.emplace_back(grid);
             ++id;
             row = 0;
         }
@@ -77,11 +82,13 @@ int main(int argc, char* argv[]) {
         bool exit = false;
         std::cout<<"Your character is: "<<playerChar<<std::endl;
         for(int i=0; i<5; ++i){
-            int i = 4;
             std::cout << "------------------ Level "<< std::to_string(i+1)<<" ------------------" << std::endl;
             std::cout<<"Generating the floor..."<<std::endl;
-            (floors[i])->generateAll(player);
+            if(readFile){
+                (floors[i])->readFromFile(player);
+            }else (floors[i])->generateAll(player);
             floors[i]->getPlayer()->removeTempPotion();
+            floors[i]->print();
             std::string cmd, arg;
             bool enemyMoving = true;
             while (std::cin>>cmd){
@@ -109,7 +116,11 @@ int main(int argc, char* argv[]) {
                     floors[i]->getPlayer()->removeTempPotion();
                     std::cout << "Restarts the game" << std::endl;
                     for(int j = 0; j<=i; ++j){
-                        floors[j]->clearFloor();
+                        if(readFile){
+                            floors[j] = std::make_shared<Floor>(fileContent[i], i);
+                        }else{
+                            floors[j]->clearFloor();
+                        }
                     }
                     break;
                 }

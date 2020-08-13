@@ -7,13 +7,11 @@
 #include "item.h"
 
 class Potion: public Item{
-    int effect;
     int type;
 
     public:
-    Potion(int, int, int, int);
+    Potion(int, int, int);
     ~Potion() { }
-    int getEffect();
     int getType();
 };
 
