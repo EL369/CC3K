@@ -487,38 +487,41 @@ void Floor::playerAttack(std::string str){
 }
 
 void Floor::clearFloor(){   
-    int a = enemies.size();
-    for (int i = 0; i < a; i++){
-        int x = enemies[0]->getCol();
-        int y = enemies[0]->getRow();
-        grid[y][x] = '.';
-        enemies.erase(enemies.begin());
-    }
+    // int a = enemies.size();
+    // for (int i = 0; i < a; i++){
+    //     int x = enemies[0]->getCol();
+    //     int y = enemies[0]->getRow();
+    //     grid[y][x] = '.';
+    //     enemies.erase(enemies.begin());
+    // }
     enemies.clear();
-    a = treasures.size();
-    for (int i = 0; i < a; i++){
-        int x = treasures[0]->getCol();
-        int y = treasures[0]->getRow();
-        grid[y][x] = '.';
-        treasures.erase(treasures.begin());
-    }
+    // a = treasures.size();
+    // for (int i = 0; i < a; i++){
+    //     int x = treasures[0]->getCol();
+    //     int y = treasures[0]->getRow();
+    //     grid[y][x] = '.';
+    //     treasures.erase(treasures.begin());
+    // }
     treasures.clear();
-    a = potions.size();
-    for (int i = 0; i < a; i++){
-        int x = potions[0]->getCol();
-        int y = potions[0]->getRow();
-        grid[y][x] = '.';
-        potions.erase(potions.begin());
-    }
+    // a = potions.size();
+    // for (int i = 0; i < a; i++){
+    //     int x = potions[0]->getCol();
+    //     int y = potions[0]->getRow();
+    //     grid[y][x] = '.';
+    //     potions.erase(potions.begin());
+    // }
     potions.clear();
-    a = chambers.size();
-    for (int i = 0; i < a; i++){
-        // chambers.erase(chambers.begin());
-    }
     chambers.clear();
-    int x = player->getCol();
-    int y = player->getRow();
-    grid[y][x] = '.';
+    for (int i = 0; i < 25; i++){
+        for(int j=0; j<79; ++j){
+            if(grid[i][j]!='.'&&grid[i][j]!='-'&&grid[i][j]!='|'&&grid[i][j]!='+'&&grid[i][j]!='#'&&grid[i][j]!=' '){
+                grid[i][j]='.';
+            }
+        }
+    }
+    // int x = player->getCol();
+    // int y = player->getRow();
+    // grid[y][x] = '.';
 }
 
 
