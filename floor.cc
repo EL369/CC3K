@@ -479,7 +479,7 @@ void Floor::playerAttack(std::string str){
                 std::shared_ptr<Dragon> dragon = std::dynamic_pointer_cast<Dragon> (enemies[at]);
                 grid[y][x] = '.';
                 dragon->getDhoard()->setPick(true);
-                std::cout << "Dragon Hoard can be picked now! ";
+                std::cout << "Dragon Hoard can be picked now! " << std::endl;
             }
             enemies.erase(enemies.begin()+at);
         }
@@ -519,6 +519,7 @@ void Floor::clearFloor(){
             }
         }
     }
+    reachStair = false;
     // int x = player->getCol();
     // int y = player->getRow();
     // grid[y][x] = '.';
