@@ -4,7 +4,7 @@
 #include "../enemy.h"
 
 class Halfling: public Enemy{
-    friend class concreteLevel;
+    friend class concreteType;
     public:
     Halfling(): Enemy{100,15,20,0,0,'L',true} { }
 };

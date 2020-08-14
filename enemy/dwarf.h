@@ -5,7 +5,7 @@
 #include "../enemy.h"
 
 class Dwarf: public Enemy{
-    friend class concreteLevel;
+    friend class concreteType;
     public:
     Dwarf();
     void attackPlayer(Vampire &) override;

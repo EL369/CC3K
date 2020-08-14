@@ -4,7 +4,7 @@
 #include "../enemy.h"
 
 class Merchant: public Enemy{
-    friend class concreteLevel;
+    friend class concreteType;
     public:
     Merchant(): Enemy{30,70,5,0,0,'M',false} { }
 };

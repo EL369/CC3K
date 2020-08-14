@@ -5,7 +5,7 @@
 #include "../treasure/dHoard.h"
 
 class Dragon: public Enemy{
-    friend class concreteLevel;
+    friend class concretType;
     std::shared_ptr<Dhoard> dhoard;
     public:
     Dragon(): Enemy{150,20,20,0,0,'D',true} { }

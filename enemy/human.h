@@ -4,7 +4,7 @@
 #include "../enemy.h"
 
 class Human: public Enemy{
-    friend class concreteLevel;
+    friend class concreteType;
     public:
     Human(): Enemy{140,20,20,0,0,'H',true} { }
 };
