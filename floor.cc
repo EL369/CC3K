@@ -702,4 +702,5 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
             }
         }
     }
+    reachStair = false;
 }

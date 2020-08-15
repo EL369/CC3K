@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
                     std::cout << "Restarts the game" << std::endl;
                     for(int j = 0; j<=i; ++j){
                         if(readFile){
-                            floors[j] = std::make_shared<Floor>(fileContent[i], i);
+                            floors[j] = std::make_shared<Floor>(fileContent[j], j);
                         }else{
                             floors[j]->clearFloor();
                         }
