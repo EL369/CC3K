@@ -1,6 +1,7 @@
 # CC3K
 
 Run command ./cc3k to play with randomly generated floors
+
 Run with command line argument ./cc3k <filename> to play with user-designed floors (ie. test.txt, testfloor.txt, testenemy.txt)
 
 * no,so,ea,we,ne,nw,se,sw: moves the player character one block in the appropriate cardinal direction.
