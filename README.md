@@ -11,3 +11,4 @@ Run with command line argument ./cc3k {filename} to play with user-designed floo
 * r: restarts the game. All stats, inventory, and gold are reset. A new race should be selected.
 * q: allows the player to admit defeat and exit the game.
   
+See documentations in doc folder
