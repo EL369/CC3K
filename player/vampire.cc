@@ -47,6 +47,11 @@ void Vampire::attackEnemy(std::shared_ptr <Enemy> enemy){
     damage *= -1;
     enemy->addHP(damage);
     std::cout << "  Enemy's health now is: " << enemy->getHP() << std::endl;
-    health += 5; 
-    std::cout << "  You gain 5 HP"<< std::endl;
+    if(enemy->getType()=='W'){
+        health -= 5;
+        std::cout << "  You lost 5 HP"<< std::endl;
+    }else{
+        health += 5; 
+        std::cout << "  You gain 5 HP"<< std::endl;
+    }
 }

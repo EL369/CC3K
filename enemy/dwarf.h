@@ -7,8 +7,7 @@
 class Dwarf: public Enemy{
     friend class concreteType;
     public:
-    Dwarf();
-    void attackPlayer(Vampire &) override;
+    Dwarf():Enemy{100,20,30,0,0,'W',true} { }
 };
 
 #endif

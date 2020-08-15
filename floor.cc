@@ -320,7 +320,7 @@ void Floor::enemyAttackPlayer(){
     }
     if (player->getHP() <= 0){
         player->setAlive(false);
-        action += "Your character is dead. GG";
+        action += "\nYour character is dead. GG";
     }
 }
 
@@ -434,11 +434,11 @@ void Floor::playerAttack(std::string str){
                 int i = rand() % 2;
                 if (i == 0){
                     player->addGold(1);
-                    action += "You gained 1 gold. ";
+                    action += "You gained a small pile of gold. ";
                 }
                 else{
                     player->addGold(2);
-                    action += "You gained 2 golds. " ;
+                    action += "You gained a normal pile of gold. " ;
                 }
                 grid[y][x] = '.';
             }
@@ -466,7 +466,7 @@ void Floor::playerAttack(std::string str){
                         }
                     }
                 }
-                std::cout<< "Two golds are dropped. " << std::endl;
+                std::cout<< "Two normal piles of gold are dropped. " << std::endl;
             }
             else if (grid[y][x] == 'M'){
                 auto merchantH = std::make_shared<Mhoard>();
@@ -649,13 +649,20 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
                 e->setCol(col);
                 e->setOrigin('.');
                 std::shared_ptr<Dhoard> t = std::make_shared<Dhoard>();
-                t->setRow(row);
-                t->setCol(col-1);
+                for(int r=row-1; r<=row+1; ++r){
+                    for(int c=col-1; c<=col+1; ++c){
+                        if(grid[r][c]=='9'){
+                            t->setRow(r);
+                            t->setCol(c);
+                            grid[r][c] = 'G';
+                            break;
+                        }
+                    }
+                }
                 t->setOrigin('.');
                 e->setDhoard(t);
                 enemies.emplace_back(e);
                 treasures.emplace_back(t);
-                grid[row][col-1] = 'G';
             }else if(grid[row][col]=='W'){
                 std::shared_ptr<Dwarf> e = std::make_shared<Dwarf>();
                 e->setRow(row);
