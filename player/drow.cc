@@ -9,6 +9,7 @@ Drow::Drow():
     Player{150,25,15,0,0,0,0,150,"Drow"} { }
 
 void Drow::accept(Enemy& enemy){
+    std::srand(time(NULL));
     int i = rand() % 2;
     if (i == 0){
         std::cout << enemy.getType() << " attacks you:" << std::endl;
@@ -84,6 +85,9 @@ void Drow::usePotion(std::shared_ptr<Potion> potion){
 }
 
 void Drow::removeTempPotion(){
+    if (tempPotion.empty()){
+        return;
+    }
     int size = tempPotion.size();
     for(int i = 0; i < size; i++){
         if (tempPotion[i]->getType() == 1){
@@ -109,4 +113,5 @@ void Drow::removeTempPotion(){
             defense += 7.5;
         }
     }
+    tempPotion.clear();
 }

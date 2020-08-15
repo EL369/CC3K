@@ -1,6 +1,7 @@
 #include "vampire.h"
 #include <cstdlib>
 #include <cmath>
+#include <time.h>
 
 
 Vampire::Vampire(): 
@@ -8,6 +9,7 @@ Vampire::Vampire():
 
 void Vampire::accept(Enemy& enemy){
     if (enemy.getType() == 'E'){ // elf get two attacks against Vampire
+        std::srand(time(NULL));
         int i = rand() % 2;
         if (i == 0){
             std::cout << enemy.getType() << " attacks you:" << std::endl;
@@ -17,6 +19,7 @@ void Vampire::accept(Enemy& enemy){
             std::cout << enemy.getType() << " misses attack" << std::endl;
         }
     }
+    std::srand(time(NULL));
     int i = rand() % 2;
     if (i == 0){
         std::cout << enemy.getType() << " attacks you:" << std::endl;
@@ -28,6 +31,14 @@ void Vampire::accept(Enemy& enemy){
 }
 
 void Vampire::attackEnemy(std::shared_ptr <Enemy> enemy){
+    if (enemy->getType() == 'L'){
+        std::srand(time(NULL));
+        int i = rand() % 2;
+        if (i == 0){
+            std::cout << "You misse attack to Halfling" << std::endl;
+            return;
+        }
+    }
     int def = enemy->getDF();
     int atk = attack;
     int damage = ceil((100.0/(100+def))*atk);
