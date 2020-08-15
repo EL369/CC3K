@@ -654,6 +654,7 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
                         if(grid[row][col]=='9'){
                             t->setRow(r);
                             t->setCol(c);
+                            grid[r][c] = 'G';
                             break;
                         }
                     }
@@ -662,7 +663,6 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
                 e->setDhoard(t);
                 enemies.emplace_back(e);
                 treasures.emplace_back(t);
-                grid[row][col-1] = 'G';
             }else if(grid[row][col]=='W'){
                 std::shared_ptr<Dwarf> e = std::make_shared<Dwarf>();
                 e->setRow(row);
