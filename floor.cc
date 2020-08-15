@@ -649,8 +649,15 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
                 e->setCol(col);
                 e->setOrigin('.');
                 std::shared_ptr<Dhoard> t = std::make_shared<Dhoard>();
-                t->setRow(row);
-                t->setCol(col-1);
+                for(int r=row-1; r<=row+1; ++r){
+                    for(int c=col-1; c<=col+1; ++c){
+                        if(grid[row][col]=='9'){
+                            t->setRow(r);
+                            t->setCol(c);
+                            break;
+                        }
+                    }
+                }
                 t->setOrigin('.');
                 e->setDhoard(t);
                 enemies.emplace_back(e);
