@@ -338,6 +338,7 @@ void Floor::EnemymoveHelper(int at){
             }
         }
     }
+    std::srand(time(NULL));
     int k = rand() % acc;
     k *= 2;
     int y = pos[k];
@@ -483,6 +484,9 @@ void Floor::playerAttack(std::string str){
             }
             enemies.erase(enemies.begin()+at);
         }
+    }
+    else{
+        action += "No enemy in this direction. ";
     }
 }
 
@@ -698,4 +702,5 @@ void Floor::readFromFile(std::shared_ptr<Player> p){
             }
         }
     }
+    reachStair = false;
 }
